@@ -13,6 +13,24 @@ const DashboardContainer = () => {
   const [newestBudget, setNewestBudget] = useState({});
   const [budgets, setBudgets] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const defaultBudget = {
+    title: "",
+    description: "",
+    categories: [
+      {
+        title: "Income",
+        description: "Money entering",
+        isExpense: false,
+        target: 0
+      },
+      {
+        title: "Expense",
+        description: "Money exiting",
+        isExpense: true,
+        target: 0
+      }
+    ] 
+  };
 
   // TODO: error handling
   useEffect(() => {
@@ -31,9 +49,13 @@ const DashboardContainer = () => {
     setShowModal(false);
   };
 
-  const addBudget = (newBudget) => {
+  const addBudget = (budgetData) => {
     setShowModal(false);
-    axios.post('http://localhost:5000/budgets', newBudget)
+    axios.post('http://localhost:5000/budgets', {
+      ...defaultBudget,
+      title: budgetData.title,
+      description: budgetData.description
+    })
       .then(response => {
         setLoading(true);
         setNewestBudget(response)
@@ -62,19 +84,29 @@ const DashboardContainer = () => {
       }
       <NewBudgetModal 
         showModal={showModal} 
-        handleCloseAddBudget={handleCloseAddBudget} 
-        addBudget={addBudget}
-      />
+        handleClose={handleCloseAddBudget} 
+        submitBudget={addBudget}
+        baseBudget={defaultBudget}
+        modalTitle="Add Budget"
+        reset
+      >
+        <p className="mb-3 text-muted">
+          Your budget will have an "Income" and "Expense" category by default. 
+          Additional categories can be added/deleted in the individual budget page
+          after it's created.
+        </p>
+      </NewBudgetModal>
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Modify budget (text and description only)</li>
           <li>Add transaction</li>
           <li>Modify transaction</li>
           <li>Delete transaction</li>
+          <li>CUD APIs in backend for categories</li>
           <li>Add category</li>
           <li>Modify category</li>
           <li>Delete category</li>
+          <li>Error handling (404s, 500s, etc)</li>
         </ul>
       </Row>
     </Container>

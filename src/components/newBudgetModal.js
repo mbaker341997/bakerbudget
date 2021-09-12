@@ -3,31 +3,19 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
-const NewBudgetModal = ({ showModal, handleCloseAddBudget, addBudget }) => {
-  const defaultBudget = {
-    title: "",
-    description: "",
-    categories: [
-      {
-        title: "Income",
-        description: "Money entering",
-        isExpense: false,
-        target: 0
-      },
-      {
-        title: "Expense",
-        description: "Money exiting",
-        isExpense: true,
-        target: 0
-      }
-    ] 
+// "New" is a misnomer, also applicable on updates
+// budget data is meant to contain only that information that the form submits, nothing else. so not the entire budget
+const NewBudgetModal = ({ showModal, handleClose, submitBudget, baseBudget, modalTitle, reset, children }) => {
+  const baseBudgetData = {
+    title: baseBudget.title,
+    description: baseBudget.description
   };
-
-  const [newBudget, setNewBudget] = useState(defaultBudget);
+  const [budgetData, setBudgetData] = useState(baseBudgetData);
+  console.log("budget title: " + budgetData.title)
 
   const handleNewBudgetChange = (event) => {
-    setNewBudget({
-      ...newBudget,
+    setBudgetData({
+      ...budgetData,
       [event.target.name]: event.target.value
     });
     event.preventDefault();
@@ -35,28 +23,27 @@ const NewBudgetModal = ({ showModal, handleCloseAddBudget, addBudget }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addBudget(newBudget);
-    setNewBudget({...defaultBudget})
+    submitBudget(budgetData);
+    console.log('setting base budget data');
+    if(reset) {
+      setBudgetData({...baseBudgetData});
+    }
   }
 
   return (
     <Modal show={showModal}>
       <Form onSubmit={handleSubmit}>
         <Modal.Header>
-          <Modal.Title>Add Budget</Modal.Title>
+          <Modal.Title>{ modalTitle }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p className="mb-3 text-muted">
-            Your budget will have an "Income" and "Expense" category by default. 
-            Additional categories can be added/deleted in the individual budget page
-            after it's created.
-          </p>
+          { children }
           <Form.Group className="mb-3" controlId="newBudgetForm.TitleInput">
             <Form.Label>Title</Form.Label>
             <Form.Control 
               as="input" 
               name="title"
-              value={newBudget.title} 
+              value={budgetData.title} 
               onChange={handleNewBudgetChange} 
             />
           </Form.Group>  
@@ -66,13 +53,13 @@ const NewBudgetModal = ({ showModal, handleCloseAddBudget, addBudget }) => {
               as="textarea" 
               rows={3} 
               name="description" 
-              value={newBudget.description} 
+              value={budgetData.description} 
               onChange={handleNewBudgetChange}
             />
           </Form.Group>       
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAddBudget}>Close</Button>
+          <Button variant="secondary" onClick={handleClose}>Close</Button>
           <Button variant="primary" type="submit">Submit</Button>
         </Modal.Footer>
       </Form>

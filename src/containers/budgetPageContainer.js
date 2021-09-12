@@ -8,15 +8,21 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner'
 import DeleteBudgetModal from '../components/deleteBudgetModal';
+import NewBudgetModal from '../components/newBudgetModal';
 
 const BudgetPageContainer = () => {
   const [loading, setLoading] = useState(true);
   const [budget, setBudget] = useState({});
   const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
   const { id } = useParams();
 
   const showDeleteModal = () => {
     setShowDelete(true);
+  };
+
+  const handleCloseDelete = () => {
+    setShowDelete(false);
   };
 
   const deleteBudget = () => {
@@ -32,8 +38,29 @@ const BudgetPageContainer = () => {
       });
   }
 
-  const handleCloseDelete = () => {
-    setShowDelete(false);
+  const showEditModal = () => {
+    setShowEdit(true);
+  };
+
+  const handleCloseEdit = () => {
+    setShowEdit(false);
+  };
+
+  const editBudget = (budgetData) => {
+    setShowEdit(false);
+    axios.put(`http://localhost:5000/budgets/${id}`, {
+      ...budgetData
+    })
+      .then(_ => {
+        setBudget({
+          ...budget,
+          ...budgetData
+        })
+      })
+      .catch(err => {
+        alert('Error occurred when editing budget!');
+        console.log(`${err}`);
+      });
   };
 
   // TODO: error handling 
@@ -52,9 +79,12 @@ const BudgetPageContainer = () => {
         </Spinner> : 
         <Container>
           <Row>
-            <Col><h1>{budget.title}</h1></Col> 
+            <Col><h1>{budget.title}</h1></Col>  
             <Col>
-              <Button variant="danger" className="float-end" onClick={showDeleteModal}>Delete</Button>
+              <div className="float-end">   
+                <Button variant="primary" onClick={showEditModal}>Edit</Button>{' '}
+                <Button variant="danger" onClick={showDeleteModal}>Delete</Button>
+              </div>
             </Col>      
           </Row>
           <Row> 
@@ -70,6 +100,13 @@ const BudgetPageContainer = () => {
             close={handleCloseDelete}
             deleteBudget={deleteBudget}
             budgetTitle={budget.title}
+          />
+          <NewBudgetModal
+            showModal={showEdit} 
+            handleClose={handleCloseEdit} 
+            submitBudget={editBudget}
+            baseBudget={budget}
+            modalTitle="Edit Budget"
           />
         </Container>}
     </Container>
