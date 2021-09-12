@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import BudgetPageContainer from './containers/budgetPageContainer';
 import DashboardContainer from './containers/dashboardContainer';
+import { BudgetProvider } from './context/budgetProvider';
 
 function App() {
   return (
@@ -25,7 +26,11 @@ function App() {
         </header>
         <main>
           <Switch>
-            <Route path="/:id" children={<BudgetPageContainer />} />
+            <Route path="/:id">
+              <BudgetProvider>
+                <BudgetPageContainer />
+              </BudgetProvider>
+            </Route>
             <Route path="/" children={<DashboardContainer />} />
           </Switch>
         </main>

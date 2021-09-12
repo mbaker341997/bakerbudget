@@ -15,7 +15,11 @@ const BudgetTables = ({ budget }) => {
           actualTotal={budget.incomeTotal} 
           diffTotal={budget.incomeTarget - budget.incomeTotal}
         />
-        <TransactionTable transactions={budget.incomeTransactions}/>
+        <TransactionTable 
+          budgetId={budget._id} 
+          categories={budget.incomeCategories}
+          transactions={budget.incomeTransactions}
+        />
       </Row>
       <Row>
         <h2>Expenses</h2>
@@ -25,7 +29,11 @@ const BudgetTables = ({ budget }) => {
           actualTotal={budget.expenseTotal} 
           diffTotal={budget.expenseTarget - budget.expenseTotal}
         />
-        <TransactionTable transactions={budget.expenseTransactions}/>  
+        <TransactionTable 
+          budgetId={budget._id} 
+          categories={budget.expenseCategories}
+          transactions={budget.expenseTransactions}
+        />  
       </Row>
     </Container>
   )

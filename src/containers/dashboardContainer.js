@@ -107,6 +107,22 @@ const DashboardContainer = () => {
           <li>Modify category</li>
           <li>Delete category</li>
           <li>Error handling (404s, 500s, etc)</li>
+          <li>Logging middleware on the backend</li>
+          <li>Fontawesome icons</li>
+          <li>CLean up totals summary, make it look good</li>
+          <li>Switch it around to host on heroku</li>
+        </ul>
+        <h4>TODOList for Stretch goals</h4>
+        <ul>
+          <li>Add/edit icons on the card view of the budget</li>
+          <li>Color-coding of categories where you've overspent, under-received</li>
+          <li>Website dark mode</li>
+          <li>Summaries of budget performance on the card view</li>
+          <li>Hard-coded budget templates</li>
+          <li>CRUD the templates on the backend</li>
+          <li>Graphs on the report</li>
+          <li>Intelligent parsing of bank statements to add expenses</li>
+          <li>Different users with a login system of some kind</li>
         </ul>
       </Row>
     </Container>

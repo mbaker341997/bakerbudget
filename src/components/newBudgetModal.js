@@ -11,7 +11,6 @@ const NewBudgetModal = ({ showModal, handleClose, submitBudget, baseBudget, moda
     description: baseBudget.description
   };
   const [budgetData, setBudgetData] = useState(baseBudgetData);
-  console.log("budget title: " + budgetData.title)
 
   const handleNewBudgetChange = (event) => {
     setBudgetData({
@@ -24,7 +23,6 @@ const NewBudgetModal = ({ showModal, handleClose, submitBudget, baseBudget, moda
   const handleSubmit = (event) => {
     event.preventDefault();
     submitBudget(budgetData);
-    console.log('setting base budget data');
     if(reset) {
       setBudgetData({...baseBudgetData});
     }

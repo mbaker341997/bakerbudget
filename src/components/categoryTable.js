@@ -31,9 +31,9 @@ const CategoryTable = ({ categories, targetTotal, actualTotal, diffTotal }) => {
                 <tr key={category._id}>
                   <td>{category.title}</td>
                   <td>{category.description}</td>
-                  <td>{category.target}</td>
-                  <td>{category.actual}</td>
-                  <td>{category.diff}</td>
+                  <td>${category.target}</td>
+                  <td>${category.actual}</td>
+                  <td>${category.diff}</td>
                 </tr>
               )
             })
@@ -43,9 +43,9 @@ const CategoryTable = ({ categories, targetTotal, actualTotal, diffTotal }) => {
           <tr>
             <td></td>
             <th>Total</th>
-            <td>{targetTotal}</td>
-            <td>{actualTotal}</td>
-            <td>{diffTotal}</td>
+            <td>${targetTotal}</td>
+            <td>${actualTotal}</td>
+            <td>${diffTotal}</td>
           </tr>
         </tfoot>
       </Table>
