@@ -4,17 +4,9 @@ import CategoryTable from './categoryTable';
 import TransactionTable from './transactionTable';
 
 
-const BudgetPage = ({ budget }) => {
+const BudgetTables = ({ budget }) => {
   return (
     <Container>
-      <Row>      
-        <h1>{budget.title}</h1>
-        <p>{budget.description}</p>
-        <p>Total Income: {budget.incomeTotal}</p>
-        <p>Total Expenses: {budget.expenseTotal}</p>
-        <p>Total Savings: {budget.netSavings} vs target of {budget.netTarget}</p>
-        <hr />
-      </Row>
       <Row>
         <h2>Incomes</h2>
         <CategoryTable 
@@ -39,4 +31,4 @@ const BudgetPage = ({ budget }) => {
   )
 };
 
-export default BudgetPage;
+export default BudgetTables;

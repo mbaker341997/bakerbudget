@@ -66,12 +66,8 @@ const DashboardContainer = () => {
         addBudget={addBudget}
       />
       <Row>
-        <p>Your budget list!</p>
-        <p>Will have a list of budgets.</p>
-        <p>And a popup modal for new budget.</p>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Delete budget</li>
           <li>Modify budget (text and description only)</li>
           <li>Add transaction</li>
           <li>Modify transaction</li>
@@ -79,7 +75,6 @@ const DashboardContainer = () => {
           <li>Add category</li>
           <li>Modify category</li>
           <li>Delete category</li>
-          <li>Figure out that silly padding at the bottom</li>
         </ul>
       </Row>
     </Container>
