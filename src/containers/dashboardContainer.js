@@ -99,7 +99,6 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Add transaction</li>
           <li>Modify transaction</li>
           <li>Delete transaction</li>
           <li>CUD APIs in backend for categories</li>

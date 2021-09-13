@@ -4,8 +4,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import NewTransactionModal from './newTransactionModal';
+import { addTransactionAction } from '../context/budgetActions';
 
-const TransactionTable = ({ budgetId, categories, transactions }) => {
+const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
   const [showModal, setShowModal] = useState(false);
   const formatDate = (dateString) => new Date(dateString).toLocaleString('en-US', { dateStyle: 'medium'});
   const baseTransaction = {
@@ -20,6 +21,7 @@ const TransactionTable = ({ budgetId, categories, transactions }) => {
   const submitTransaction = (transaction) => {
     console.log(transaction);
     setShowModal(false);
+    addTransactionAction(transaction, dispatch);
   };
 
   const handleShowAdd = () => {

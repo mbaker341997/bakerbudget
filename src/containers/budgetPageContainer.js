@@ -74,7 +74,7 @@ const BudgetPageContainer = () => {
               <p>Total Savings: ${budgetState.budget.netSavings} vs target of ${budgetState.budget.netTarget}</p>
               <hr />
             </Row>
-            <BudgetTables budget={budgetState.budget}/>
+            <BudgetTables budget={budgetState.budget} dispatch={budgetDispatch} />
             <DeleteBudgetModal
               show={showDelete}
               close={handleCloseDelete}

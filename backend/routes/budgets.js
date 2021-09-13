@@ -99,7 +99,7 @@ const generateReport = (budget, transactions) => {
   const expenseCategories = [];
   budget.categories.forEach(category => {
     const actual = categoryMap[category._id] ? categoryMap[category._id] : 0;
-    const diff = category.target - actual;
+    const diff = actual - category.target;
 
     if(category.isExpense) {
       expenseTotal += actual;
