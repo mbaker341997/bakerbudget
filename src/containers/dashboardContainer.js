@@ -99,7 +99,6 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Delete transaction</li>
           <li>CUD APIs in backend for categories</li>
           <li>Add category</li>
           <li>Modify category</li>
@@ -114,6 +113,7 @@ const DashboardContainer = () => {
         </ul>
         <h4>TODOList for Stretch goals</h4>
         <ul>
+          <li>Find some way to reduce the reloads</li>
           <li>Add/edit icons on the card view of the budget</li>
           <li>Color-coding of categories where you've overspent, under-received</li>
           <li>Website dark mode</li>
@@ -123,6 +123,7 @@ const DashboardContainer = () => {
           <li>Graphs on the report</li>
           <li>Intelligent parsing of bank statements to add expenses</li>
           <li>Different users with a login system of some kind</li>
+          <li>Bulk transaction adding.</li>
         </ul>
       </Row>
     </Container>

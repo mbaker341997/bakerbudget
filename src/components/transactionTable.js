@@ -3,8 +3,9 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import DeleteModal from './deleteModal';
 import NewTransactionModal from './newTransactionModal';
-import { addTransactionAction, editTransactionAction } from '../context/budgetActions';
+import { addTransactionAction, deleteTransactionAction, editTransactionAction } from '../context/budgetActions';
 
 const SELECTED_CLASSNAME = "selectedRow";
 const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
@@ -17,10 +18,11 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
     date: ""
   };
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [editModal, setEditModal] = useState(null);
-
+  
   const submitTransaction = (formData) => {
     setShowAddModal(false);
     addTransactionAction({
@@ -33,6 +35,11 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
     setEditModal(null);
     editTransactionAction(selectedItem._id, budgetId, formData, dispatch);
   };
+
+  const deleteTransaction = () => {
+    setShowDeleteModal(false);
+    deleteTransactionAction(selectedItem._id, budgetId, dispatch);
+  }
 
   const handleShowAdd = () => {
     setShowAddModal(true);
@@ -60,6 +67,14 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
     setEditModal(null);
   };
 
+  const handleShowDelete = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDelete = () => {
+    setShowDeleteModal(false);
+  };
+
   const clickTransaction = (event) => {
     // note: currentTarget has the actual event listener on it, so it's how we get the row
     const clickedId = event.currentTarget.id;
@@ -83,7 +98,7 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
           <h3>Transactions</h3>
         </Col>
         <Col md="auto">
-          <Button variant="primary" onClick={handleShowAdd}>+</Button>
+          <Button variant="outline-primary" onClick={handleShowAdd}><b>+</b></Button>
         </Col>
         { 
           selectedRow &&
@@ -92,7 +107,7 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
               <Button variant="primary" onClick={handleShowEdit}>Edit</Button>
             </Col>
             <Col md="auto">
-              <Button variant="danger" onClick={handleShowAdd}>Delete</Button>
+              <Button variant="danger" onClick={handleShowDelete}>Delete</Button>
             </Col>
           </>        
         }
@@ -133,6 +148,13 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
         reset 
       />
       { editModal }
+      <DeleteModal
+        show={showDeleteModal}
+        close={handleCloseDelete}
+        deleteAction={deleteTransaction}
+        title={selectedItem ? selectedItem.title : ""}
+        body="Are you sure you want to delete this budget? Action cannot be undone."
+      />
     </div>
   )
 }

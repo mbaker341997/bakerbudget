@@ -3,7 +3,6 @@ import {
   SET_LOADING_BUDGET,
   EDIT_BUDGET_SUCCESS,
   FETCH_BUDGET_SUCCESS,
-  DELETE_BUDGET_SUCCESS,
   ERROR,
 } from './budgetActionTypes';
 
@@ -54,9 +53,7 @@ export const deleteBudgetAction = (id, dispatch) => {
 
   axios.delete(`http://localhost:5000/budgets/${id}`)
     .then(_ => {
-      dispatch({
-        type: DELETE_BUDGET_SUCCESS
-      });
+      window.location = "/";
     })
     .catch(err => {
       dispatch({
@@ -90,6 +87,23 @@ export const editTransactionAction = (id, budgetId, data, dispatch) => {
   axios.put(`http://localhost:5000/transactions/${id}`, {
     ...data
   })
+    .then(_ => {
+      // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
+      fetchBudgetAction(budgetId, dispatch);
+    })
+    .catch(err => {
+      dispatch({
+        type: ERROR,
+        payload: err.response ? err.response.data : "ERROR ADDING TRANSACTION"
+      });
+    });
+}
+
+// note: data only includes those values we allow to be edited from the frontend
+// the transaciton's id and budget id are passed separately
+export const deleteTransactionAction = (id, budgetId, dispatch) => {
+  // axios PUT call 
+  axios.delete(`http://localhost:5000/transactions/${id}`)
     .then(_ => {
       // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
       fetchBudgetAction(budgetId, dispatch);

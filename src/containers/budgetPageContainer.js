@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner'
-import DeleteBudgetModal from '../components/deleteBudgetModal';
+import DeleteModal from '../components/deleteModal';
 import NewBudgetModal from '../components/newBudgetModal';
 import { BudgetContext } from '../context/budgetProvider';
 import { deleteBudgetAction, editBudgetAction, fetchBudgetAction } from '../context/budgetActions';
@@ -29,7 +29,6 @@ const BudgetPageContainer = () => {
   const deleteBudget = () => {
     setShowDelete(false);
     deleteBudgetAction(id, budgetDispatch);
-    window.location = "/";
   }
 
   const showEditModal = () => {
@@ -75,11 +74,12 @@ const BudgetPageContainer = () => {
               <hr />
             </Row>
             <BudgetTables budget={budgetState.budget} dispatch={budgetDispatch} />
-            <DeleteBudgetModal
+            <DeleteModal
               show={showDelete}
               close={handleCloseDelete}
-              deleteBudget={deleteBudget}
-              budgetTitle={budgetState.budget.title}
+              deleteAction={deleteBudget}
+              title={budgetState.budget.title}
+              body="Are you sure you want to delete this budget? Action cannot be undone."
             />
             <NewBudgetModal
               showModal={showEdit} 
