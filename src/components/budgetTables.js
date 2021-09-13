@@ -9,11 +9,14 @@ const BudgetTables = ({ budget, dispatch }) => {
     <Container>
       <Row>
         <h2>Incomes</h2>
-        <CategoryTable 
-          categories={budget.incomeCategories} 
+        <CategoryTable
+          budgetId={budget._id} 
+          categories={budget.incomeCategories}
+          isExpense={false} 
           targetTotal={budget.incomeTarget} 
           actualTotal={budget.incomeTotal} 
           diffTotal={budget.incomeTotal - budget.incomeTarget}
+          dispatch={dispatch}
         />
         <TransactionTable 
           budgetId={budget._id} 
@@ -26,10 +29,13 @@ const BudgetTables = ({ budget, dispatch }) => {
       <Row>
         <h2>Expenses</h2>
         <CategoryTable 
-          categories={budget.expenseCategories} 
+          budgetId={budget._id}
+          categories={budget.expenseCategories}
+          isExpense={true} 
           targetTotal={budget.expenseTarget} 
           actualTotal={budget.expenseTotal} 
           diffTotal={budget.expenseTotal - budget.expenseTarget}
+          dispatch={dispatch}
         />
         <TransactionTable 
           budgetId={budget._id} 

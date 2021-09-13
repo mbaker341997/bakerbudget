@@ -6,79 +6,96 @@ import {
   FETCH_BUDGET_SUCCESS,
   REMOVE_EXPENSE,
   REMOVE_INCOME,
-  SET_LOADING_BUDGET
+  SET_LOADING_BUDGET,
+  ADD_EXPENSE_CATEGORY,
+  ADD_INCOME_CATEGORY,
+  REMOVE_EXPENSE_CATEGORY,
+  REMOVE_INCOME_CATEGORY
 } from './budgetActionTypes';
 
+// TODO: major need of a cleanup + tests
 // TODO: these methods feel very not DRY
 // doesn't feel too DRY with the backend. are we calculating too much there?
 const addIncomeToBudget = (income, budget) => {
-  const newCat = budget.incomeCategories.find(category => category._id === income.categoryId);
+  const catIndex = budget.incomeCategories.findIndex(category => category._id === income.categoryId);
+  const newCat = budget.incomeCategories[catIndex];
+  const newCategories = budget.incomeCategories;
+  newCategories.splice(catIndex, 1, {
+    ...newCat,
+    actual: newCat.actual + income.amount
+  });
   return {
     ...budget,
     incomeTransactions: [...budget.incomeTransactions, { ...income, categoryName: newCat.title }],
-    incomeCategories: [
-      ...budget.incomeCategories.filter(category => category._id !== income.categoryId), 
-      {
-        ...newCat,
-        actual: newCat.actual + income.amount
-      }
-    ],
+    incomeCategories: newCategories,
     incomeTotal: budget.incomeTotal + income.amount,
-    netSavings: budget.incomeTotal + income.amount - budget.expenseTotal  
   };
 };
 
 const addExpenseToBudget = (expense, budget) => {
-  const newCat = budget.expenseCategories.find(category => category._id === expense.categoryId);
+  const catIndex = budget.expenseCategories.findIndex(category => category._id === expense.categoryId);
+  const newCat = budget.expenseCategories[catIndex];
+  const newCategories = budget.expenseCategories;
+  newCategories.splice(catIndex, 1, {
+    ...newCat,
+    actual: newCat.actual + expense.amount
+  });
   return {
     ...budget,
     expenseTransactions: [...budget.expenseTransactions, { ...expense, categoryName: newCat.title }],
-    expenseCategories: [
-      ...budget.expenseCategories.filter(category => category._id !== expense.categoryId), 
-      {
-        ...newCat,
-        actual: newCat.actual + expense.amount
-      }
-    ],
+    expenseCategories: newCategories,
     expenseTotal: budget.expenseTotal + expense.amount,
-    netSavings: budget.incomeTotal - (budget.expenseTotal + expense.amount) 
   };
 };
 
 const removeIncomeFromBudget = (incomeId, budget) => {
   const income = budget.incomeTransactions.find(transaction => transaction._id === incomeId);
-  const cat = budget.incomeCategories.find(category => category._id === income.categoryId);
+  const catIndex = budget.incomeCategories.findIndex(category => category._id === income.categoryId);
+  const newCat = budget.incomeCategories[catIndex];
+  const newCategories = budget.incomeCategories;
+  newCategories.splice(catIndex, 1, {
+    ...newCat,
+    actual: newCat.actual - income.amount
+  });
   return {
     ...budget,
     incomeTransactions: budget.incomeTransactions.filter(transaction => transaction._id !== income._id),
-    incomeCategories: [
-      ...budget.incomeCategories.filter(category => category._id !== income.categoryId), 
-      {
-        ...cat,
-        actual: cat.actual - income.amount
-      }
-    ],
+    incomeCategories: newCategories,
     incomeTotal: budget.incomeTotal - income.amount,
-    netSavings: budget.incomeTotal - income.amount - budget.expenseTotal  
   };
 };
 
 const removeExpenseFromBudget = (expenseId, budget) => {
   const expense = budget.expenseTransactions.find(transaction => transaction._id === expenseId);
-  const cat = budget.expenseCategories.find(category => category._id === expense.categoryId);
+  const catIndex = budget.expenseCategories.findIndex(category => category._id === expense.categoryId);
+  const newCat = budget.expenseCategories[catIndex];
+  const newCategories = budget.expenseCategories;
+  newCategories.splice(catIndex, 1, {
+    ...newCat,
+    actual: newCat.actual - expense.amount
+  });
   return {
     ...budget,
     expenseTransactions: budget.expenseTransactions.filter(transaction => transaction._id !== expense._id),
-    expenseCategories: [
-      ...budget.expenseCategories.filter(category => category._id !== expense.categoryId), 
-      {
-        ...cat,
-        actual: cat.actual - expense.amount
-      }
-    ],
+    expenseCategories: newCategories,
     expenseTotal: budget.expenseTotal - expense.amount,
-    netSavings: budget.incomeTotal - (budget.expenseTotal - expense.amount)
   };
+};
+
+const addIncomeCategoryToBudget = (category, budget) => {
+  return {
+    ...budget,
+    incomeCategories: [...budget.incomeCategories, { ...category, actual: 0 }],
+    incomeTarget: budget.incomeTarget + category.target
+  }
+};
+
+const addExpenseCategoryToBudget = (category, budget) => {
+  return {
+    ...budget,
+    expenseCategories: [...budget.expenseCategories, { ...category, actual: 0 }],
+    expenseTarget: budget.expenseTarget + category.target
+  }
 };
 
 const budgetReducer = (state, { payload, type }) => {
@@ -106,6 +123,18 @@ const budgetReducer = (state, { payload, type }) => {
         ...state,
         budget: removeExpenseFromBudget(payload, state.budget)
       };
+    }
+    case ADD_EXPENSE_CATEGORY: {
+      return {
+        ...state,
+        budget: addExpenseCategoryToBudget(payload, state.budget)
+      }
+    }
+    case ADD_INCOME_CATEGORY: {
+      return {
+        ...state,
+        budget: addIncomeCategoryToBudget(payload, state.budget)
+      }
     }
     case SET_LOADING_BUDGET:
       return {

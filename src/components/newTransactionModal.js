@@ -78,7 +78,7 @@ const NewTransactionModal = ({
             </Form.Group>
             <Form.Group className="mb-3" controlId="newTransactionForm.CategorySelect">
               <Form.Label>Category</Form.Label>
-              <Form.Select aria-label="Select" value={data.categoryId} onChange={handleChange}>
+              <Form.Select aria-label="Select" value={data.categoryId} name="categoryId" onChange={handleChange}>
                 {
                   categories.map(category => {
                     return (

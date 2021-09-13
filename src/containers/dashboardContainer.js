@@ -99,7 +99,7 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>CUD APIs in backend for categories</li>
+          <li>UD APIs in backend for categories</li>
           <li>Add category</li>
           <li>Modify category</li>
           <li>Delete category</li>
@@ -123,6 +123,7 @@ const DashboardContainer = () => {
           <li>Intelligent parsing of bank statements to add expenses</li>
           <li>Different users with a login system of some kind</li>
           <li>Bulk transaction adding.</li>
+          <li>SSL?</li>
         </ul>
       </Row>
     </Container>

@@ -70,7 +70,8 @@ const BudgetPageContainer = () => {
               <p>{budgetState.budget.description}</p>
               <p>Total Income: ${budgetState.budget.incomeTotal}</p>
               <p>Total Expenses: ${budgetState.budget.expenseTotal}</p>
-              <p>Total Savings: ${budgetState.budget.netSavings} vs target of ${budgetState.budget.netTarget}</p>
+              <p>Total Savings: ${budgetState.budget.incomeTotal - budgetState.budget.expenseTotal}{' '} 
+              vs target of ${budgetState.budget.incomeTarget - budgetState.budget.expenseTarget} </p>
               <hr />
             </Row>
             <BudgetTables budget={budgetState.budget} dispatch={budgetDispatch} />

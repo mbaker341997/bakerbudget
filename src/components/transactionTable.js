@@ -6,8 +6,8 @@ import Row from 'react-bootstrap/Row';
 import DeleteModal from './deleteModal';
 import NewTransactionModal from './newTransactionModal';
 import { addTransactionAction, deleteTransactionAction, editTransactionAction } from '../context/budgetActions';
+import { SELECTED_CLASSNAME } from '../constants';
 
-const SELECTED_CLASSNAME = "selectedRow";
 const TransactionTable = ({ budgetId, categories, transactions, isExpense, dispatch }) => {
   const baseTransaction = {
     title: "",

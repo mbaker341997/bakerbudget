@@ -8,6 +8,10 @@ import {
   ADD_INCOME,
   REMOVE_EXPENSE,
   REMOVE_INCOME,
+  ADD_EXPENSE_CATEGORY,
+  ADD_INCOME_CATEGORY,
+  REMOVE_EXPENSE_CATEGORY,
+  REMOVE_INCOME_CATEGORY
 } from './budgetActionTypes';
 
 export const fetchBudgetAction = (id, dispatch) => {
@@ -118,6 +122,25 @@ export const deleteTransactionAction = (id, isExpense, dispatch) => {
       dispatch({
         type: ERROR,
         payload: err.response ? err.response.data : "ERROR DELETING TRANSACTION"
+      });
+    });
+}
+
+export const addCategoryAction = (budgetId, data, dispatch) => {
+  // axios POST call 
+  axios.post(`http://localhost:5000/budgets/${budgetId}/categories`, {
+    ...data
+  })
+    .then(response => {
+      dispatch({
+        type: data.isExpense ? ADD_EXPENSE_CATEGORY : ADD_INCOME_CATEGORY,
+        payload: response.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ERROR,
+        payload: err.response ? err.response.data : "ERROR ADDING CATEGORY"
       });
     });
 }

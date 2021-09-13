@@ -53,6 +53,30 @@ router.route('/:id/transactions').get((req, res) => {
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
+// Create Category 
+router.route('/:id/categories').post((req, res) => {
+  Budget.findById(req.params.id)
+    .then(budget => {
+      if(budget) {
+        const catLength = budget.categories.push(req.body);
+        const newCategory = budget.categories[catLength-1].toObject();
+        budget.save()
+          .then(_ => res.json(newCategory))
+          .catch(err => res.status(500).json('Error: ' + err));
+      } else {
+        res.status(404).json(`No budget found of id ${req.params.id}`);
+      }
+    })
+    .catch(err => res.status(500).json('Error: ' + err));
+});
+
+// Update Category 
+
+// Delete Category 
+// -- fail if it has any transactions 
+// -- fail if it's the only isExpense left 
+// -- fail it it's the only not isExpense left 
+
 // calculates all the sums, returns all the transactions
 router.route('/:id/report').get((req, res) => {
   Budget.findById(req.params.id)
