@@ -1,11 +1,8 @@
 import {
-  ADD_TRANSACTION_ERROR,
-  EDIT_BUDGET_ERROR,
+  ERROR,
   EDIT_BUDGET_SUCCESS,
   FETCH_BUDGET_SUCCESS,
-  FETCH_BUDGET_ERROR,
   SET_LOADING_BUDGET,
-  DELETE_BUDGET_ERROR,
   DELETE_BUDGET_SUCCESS
 } from './budgetActionTypes';
 
@@ -41,10 +38,7 @@ const budgetReducer = (state, { payload, type }) => {
         error: false,
         loading: false  
       }
-    case ADD_TRANSACTION_ERROR:
-    case DELETE_BUDGET_ERROR:
-    case EDIT_BUDGET_ERROR:
-    case FETCH_BUDGET_ERROR:
+    case ERROR:
       return {
         ...state,
         error: payload,

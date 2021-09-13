@@ -1,13 +1,10 @@
 import axios from 'axios';
 import {
-  ADD_TRANSACTION_ERROR,
   SET_LOADING_BUDGET,
-  EDIT_BUDGET_ERROR,
   EDIT_BUDGET_SUCCESS,
-  FETCH_BUDGET_ERROR,
   FETCH_BUDGET_SUCCESS,
   DELETE_BUDGET_SUCCESS,
-  DELETE_BUDGET_ERROR,
+  ERROR,
 } from './budgetActionTypes';
 
 export const fetchBudgetAction = (id, dispatch) => {
@@ -23,7 +20,7 @@ export const fetchBudgetAction = (id, dispatch) => {
   })
   .catch((err) => {
     dispatch({
-      type: FETCH_BUDGET_ERROR,
+      type: ERROR,
       payload: err.response ? err.response.data : "ERROR FETCHING BUDGET"
     });
   });
@@ -44,7 +41,7 @@ export const editBudgetAction = (id, data, dispatch) => {
     })
     .catch(err => {
       dispatch({
-        type: EDIT_BUDGET_ERROR,
+        type: ERROR,
         payload: err.response ? err.response.data : "ERROR EDITING BUDGET"
       });
     });
@@ -63,7 +60,7 @@ export const deleteBudgetAction = (id, dispatch) => {
     })
     .catch(err => {
       dispatch({
-        type: DELETE_BUDGET_ERROR,
+        type: ERROR,
         payload: err.response ? err.response.data : "ERROR DELETING BUDGET"
       });
     });
@@ -80,7 +77,26 @@ export const addTransactionAction = (data, dispatch) => {
     })
     .catch(err => {
       dispatch({
-        type: ADD_TRANSACTION_ERROR,
+        type: ERROR,
+        payload: err.response ? err.response.data : "ERROR ADDING TRANSACTION"
+      });
+    });
+}
+
+// note: data only includes those values we allow to be edited from the frontend
+// the transaciton's id and budget id are passed separately
+export const editTransactionAction = (id, budgetId, data, dispatch) => {
+  // axios PUT call 
+  axios.put(`http://localhost:5000/transactions/${id}`, {
+    ...data
+  })
+    .then(_ => {
+      // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
+      fetchBudgetAction(budgetId, dispatch);
+    })
+    .catch(err => {
+      dispatch({
+        type: ERROR,
         payload: err.response ? err.response.data : "ERROR ADDING TRANSACTION"
       });
     });

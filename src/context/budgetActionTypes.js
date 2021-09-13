@@ -1,7 +1,7 @@
 export const SET_LOADING_BUDGET = 'SET_LOADING_BUDGET';
+export const ERROR = 'ERROR';
 
 export const FETCH_BUDGET_SUCCESS = 'FETCH_BUDGET_SUCCESS';
-export const FETCH_BUDGET_ERROR = 'FETCH_BUDGET_ERROR';
 
 export const EDIT_BUDGET_SUCCESS = 'EDIT_BUDGET_SUCCESS';
 export const EDIT_BUDGET_ERROR = 'EDIT_BUDGET_ERROR';
@@ -10,9 +10,7 @@ export const DELETE_BUDGET_SUCCESS = 'DELETE_BUDGET_SUCCESS';
 export const DELETE_BUDGET_ERROR = 'DELETE_BUDGET_ERROR';
 
 export const ADD_TRANSACTION_ERROR = 'ADD_TRANSACTION_ERROR';
-
-// editT success
-// editT error 
+export const EDIT_TRANSACTION_ERROR = 'EDIT_TRANSACTION_ERROR';
 
 // deleteT success
 // deleteT error 

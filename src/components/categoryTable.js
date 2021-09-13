@@ -4,7 +4,7 @@ const CategoryTable = ({ categories, targetTotal, actualTotal, diffTotal }) => {
   return (
     <div>
       <h3>Categories</h3>
-      <Table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>
@@ -28,7 +28,7 @@ const CategoryTable = ({ categories, targetTotal, actualTotal, diffTotal }) => {
           {
             categories.map(category => {
               return (
-                <tr key={category._id}>
+                <tr key={category._id} id={category._id}>
                   <td>{category.title}</td>
                   <td>{category.description}</td>
                   <td>${category.target}</td>

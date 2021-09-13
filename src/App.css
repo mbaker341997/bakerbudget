@@ -9,3 +9,7 @@ main {
   padding-top: 2em;
   padding-bottom: 2em;
 }
+
+.selectedRow {
+  background-color: salmon;
+}

@@ -12,7 +12,15 @@ const NewTransactionModal = ({
   categories, 
   modalTitle, 
   reset }) => {
-    const [data, setData] = useState(baseTransaction);
+    // note, formatting of the date to get it to play nice with the html
+    const baseData = {
+      title: baseTransaction.title,
+      description: baseTransaction.description,
+      amount: baseTransaction.amount,
+      date: baseTransaction.date.split('T')[0],
+      categoryId: baseTransaction.categoryId
+    }
+    const [data, setData] = useState(baseData);
 
     const handleChange = (event) => {
       setData({
@@ -26,7 +34,7 @@ const NewTransactionModal = ({
       event.preventDefault();
       submitTransaction(data);
       if(reset) {
-        setData({...baseTransaction});
+        setData({...baseData});
       }
     }
 
