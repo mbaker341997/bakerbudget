@@ -33,7 +33,7 @@ const CategoryTable = ({ categories, targetTotal, actualTotal, diffTotal }) => {
                   <td>{category.description}</td>
                   <td>${category.target}</td>
                   <td>${category.actual}</td>
-                  <td>${category.diff}</td>
+                  <td>${category.actual - category.target}</td>
                 </tr>
               )
             })

@@ -10,7 +10,7 @@ router.route('/').get((_, res) => {
 router.route('/').post((req, res) => {
   const transaction = new Transaction(req.body);
   transaction.save()
-    .then(saved => res.json({ id: saved._id }))
+    .then(saved => res.json(saved))
     .catch(err => res.status(400).json(err.toString()))
 });
 
@@ -37,7 +37,7 @@ router.route('/:id').put((req, res) => {
           transaction[key] = value; 
         }
         transaction.save()
-          .then(saved => res.json({ id: saved._id }))
+          .then(saved => res.json(saved))
           .catch(err => res.status(400).json(err.toString()))
       }
     })

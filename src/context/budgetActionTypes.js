@@ -2,6 +2,10 @@ export const SET_LOADING_BUDGET = 'SET_LOADING_BUDGET';
 export const ERROR = 'ERROR';
 
 export const FETCH_BUDGET_SUCCESS = 'FETCH_BUDGET_SUCCESS';
-
 export const EDIT_BUDGET_SUCCESS = 'EDIT_BUDGET_SUCCESS';
-// deleteT success
+
+export const ADD_INCOME = 'ADD_INCOME';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+
+export const REMOVE_INCOME = 'REMOVE_INCOME';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';

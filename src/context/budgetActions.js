@@ -4,13 +4,13 @@ import {
   EDIT_BUDGET_SUCCESS,
   FETCH_BUDGET_SUCCESS,
   ERROR,
+  ADD_EXPENSE,
+  ADD_INCOME,
+  REMOVE_EXPENSE,
+  REMOVE_INCOME,
 } from './budgetActionTypes';
 
 export const fetchBudgetAction = (id, dispatch) => {
-  dispatch({
-    type: SET_LOADING_BUDGET
-  });
-
   axios.get(`http://localhost:5000/budgets/${id}/report`).then(result => {
     dispatch({
       type: FETCH_BUDGET_SUCCESS,
@@ -63,14 +63,16 @@ export const deleteBudgetAction = (id, dispatch) => {
     });
 }
 
-export const addTransactionAction = (data, dispatch) => {
+export const addTransactionAction = (data, isExpense, dispatch) => {
   // axios POST call 
   axios.post('http://localhost:5000/transactions', {
     ...data
   })
-    .then(_ => {
-      // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
-      fetchBudgetAction(data.budgetId, dispatch);
+    .then(response => {
+      dispatch({
+        type: isExpense ? ADD_EXPENSE : ADD_INCOME,
+        payload: response.data
+      });
     })
     .catch(err => {
       dispatch({
@@ -89,29 +91,33 @@ export const editTransactionAction = (id, budgetId, data, dispatch) => {
   })
     .then(_ => {
       // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
+      // updates are rare so for now this shortcut is fine
       fetchBudgetAction(budgetId, dispatch);
     })
     .catch(err => {
       dispatch({
         type: ERROR,
-        payload: err.response ? err.response.data : "ERROR ADDING TRANSACTION"
+        payload: err.response ? err.response.data : "ERROR EDITING TRANSACTION"
       });
     });
 }
 
 // note: data only includes those values we allow to be edited from the frontend
 // the transaciton's id and budget id are passed separately
-export const deleteTransactionAction = (id, budgetId, dispatch) => {
+export const deleteTransactionAction = (id, isExpense, dispatch) => {
   // axios PUT call 
   axios.delete(`http://localhost:5000/transactions/${id}`)
     .then(_ => {
       // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
-      fetchBudgetAction(budgetId, dispatch);
+      dispatch({
+        type: isExpense ? REMOVE_EXPENSE : REMOVE_INCOME,
+        payload: id
+      });
     })
     .catch(err => {
       dispatch({
         type: ERROR,
-        payload: err.response ? err.response.data : "ERROR ADDING TRANSACTION"
+        payload: err.response ? err.response.data : "ERROR DELETING TRANSACTION"
       });
     });
 }

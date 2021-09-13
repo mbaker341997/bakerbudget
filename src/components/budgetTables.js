@@ -19,6 +19,7 @@ const BudgetTables = ({ budget, dispatch }) => {
           budgetId={budget._id} 
           categories={budget.incomeCategories}
           transactions={budget.incomeTransactions}
+          isExpense={false}
           dispatch={dispatch}
         />
       </Row>
@@ -34,6 +35,7 @@ const BudgetTables = ({ budget, dispatch }) => {
           budgetId={budget._id} 
           categories={budget.expenseCategories}
           transactions={budget.expenseTransactions}
+          isExpense={true}
           dispatch={dispatch}
         />  
       </Row>

@@ -113,7 +113,6 @@ const DashboardContainer = () => {
         </ul>
         <h4>TODOList for Stretch goals</h4>
         <ul>
-          <li>Find some way to reduce the reloads</li>
           <li>Add/edit icons on the card view of the budget</li>
           <li>Color-coding of categories where you've overspent, under-received</li>
           <li>Website dark mode</li>

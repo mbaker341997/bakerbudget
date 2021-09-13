@@ -8,7 +8,7 @@ import NewTransactionModal from './newTransactionModal';
 import { addTransactionAction, deleteTransactionAction, editTransactionAction } from '../context/budgetActions';
 
 const SELECTED_CLASSNAME = "selectedRow";
-const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
+const TransactionTable = ({ budgetId, categories, transactions, isExpense, dispatch }) => {
   const baseTransaction = {
     title: "",
     description: "",
@@ -28,7 +28,7 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
     addTransactionAction({
       ...formData,
       budgetId
-    }, dispatch);
+    }, isExpense, dispatch);
   };
 
   const editTransaction = (formData) => {
@@ -38,7 +38,8 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
 
   const deleteTransaction = () => {
     setShowDeleteModal(false);
-    deleteTransactionAction(selectedItem._id, budgetId, dispatch);
+    setSelectedRow(null);
+    deleteTransactionAction(selectedItem._id, isExpense, dispatch);
   }
 
   const handleShowAdd = () => {
@@ -153,7 +154,7 @@ const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
         close={handleCloseDelete}
         deleteAction={deleteTransaction}
         title={selectedItem ? selectedItem.title : ""}
-        body="Are you sure you want to delete this budget? Action cannot be undone."
+        body="Are you sure you want to delete this transaction? Action cannot be undone."
       />
     </div>
   )
