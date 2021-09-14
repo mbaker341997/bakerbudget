@@ -13,7 +13,7 @@ import {
   REMOVE_INCOME_CATEGORY
 } from './budgetActionTypes';
 
-// TODO: major need of a cleanup + tests
+// TODO: major need of a cleanup + tests (not a giant switch for one )
 // TODO: these methods feel very not DRY
 // doesn't feel too DRY with the backend. are we calculating too much there?
 const addIncomeToBudget = (income, budget) => {
@@ -98,8 +98,26 @@ const addExpenseCategoryToBudget = (category, budget) => {
   }
 };
 
+const removeIncomeCategoryFromBudget = (categoryId, budget) => {
+  const deadCat = budget.incomeCategories.find(category => category._id === categoryId);
+  return {
+    ...budget,
+    incomeCategories: budget.incomeCategories.filter(category => category._id !== categoryId),
+    incomeTarget: budget.incomeTarget - deadCat.target
+  }
+};
+
+const removeExpenseCategoryFromBudget = (categoryId, budget) => {
+  const deadCat = budget.expenseCategories.find(category => category._id === categoryId);
+  return {
+    ...budget,
+    expenseCategories: budget.expenseCategories.filter(category => category._id !== categoryId),
+    expenseTarget: budget.expenseTarget - deadCat.target
+  }
+};
+
 const budgetReducer = (state, { payload, type }) => {
-  switch(type) {
+  switch(type) {    
     case ADD_INCOME: {
       return {
         ...state,
@@ -135,6 +153,18 @@ const budgetReducer = (state, { payload, type }) => {
         ...state,
         budget: addIncomeCategoryToBudget(payload, state.budget)
       }
+    }
+    case REMOVE_INCOME_CATEGORY: {
+      return {
+        ...state,
+        budget: removeIncomeCategoryFromBudget(payload, state.budget)
+      };
+    }
+    case REMOVE_EXPENSE_CATEGORY: {
+      return {
+        ...state,
+        budget: removeExpenseCategoryFromBudget(payload, state.budget)
+      };
     }
     case SET_LOADING_BUDGET:
       return {

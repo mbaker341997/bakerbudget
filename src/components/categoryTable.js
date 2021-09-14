@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import NewCategoryModal from './newCategoryModal';
 import DeleteModal from './deleteModal';
 import { SELECTED_CLASSNAME } from '../constants';
-import { addCategoryAction, editCategoryAction } from '../context/budgetActions';
+import { addCategoryAction, deleteCategoryAction, editCategoryAction } from '../context/budgetActions';
 
 const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTotal, diffTotal, dispatch }) => {
   const baseCategory = {
@@ -33,10 +33,6 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
     addCategoryAction(budgetId, { ...formData, isExpense }, dispatch);
   };
 
-  const handleShowDelete = () => {
-    setShowDeleteModal(true);
-  };
-
   const handleShowEdit = () => {
     // category changes dynamically so we can't just switch it on with a flag
     setEditModal(
@@ -51,13 +47,17 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
     );
   };
 
+  const handleCloseEdit = () => {
+    setEditModal(null);
+  };
+
   const editCategory = (formData) => {
     setEditModal(null);
     editCategoryAction(selectedItem._id, budgetId, formData, dispatch);
   };
 
-  const handleCloseEdit = () => {
-    setEditModal(null);
+  const handleShowDelete = () => {
+    setShowDeleteModal(true);
   };
 
   const handleCloseDelete = () => {
@@ -65,9 +65,9 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
   };
 
   const deleteCategory = () => {
-    console.log(`deleting category: ${selectedItem.title}`);
     setShowDeleteModal(false);
     setSelectedRow(null);
+    deleteCategoryAction(selectedItem._id, budgetId, isExpense, dispatch);
   };
 
   // TODO: this is repeated from TransactionTable, but i'm not smart enough to consolidate yet

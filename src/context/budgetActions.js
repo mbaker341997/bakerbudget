@@ -106,8 +106,6 @@ export const editTransactionAction = (id, budgetId, data, dispatch) => {
     });
 }
 
-// note: data only includes those values we allow to be edited from the frontend
-// the transaciton's id and budget id are passed separately
 export const deleteTransactionAction = (id, isExpense, dispatch) => {
   // axios DELETE call 
   axios.delete(`http://localhost:5000/transactions/${id}`)
@@ -158,6 +156,23 @@ export const editCategoryAction = (categoryId, budgetId, data, dispatch) => {
       dispatch({
         type: ERROR,
         payload: err.response ? err.response.data : "ERROR ADDING CATEGORY"
+      });
+    });
+}
+
+export const deleteCategoryAction = (categoryId, budgetId, isExpense, dispatch) => {
+  // axios DELETE call 
+  axios.delete(`http://localhost:5000/budgets/${budgetId}/categories/${categoryId}`)
+    .then(_ => {
+      dispatch({
+        type: isExpense ? REMOVE_EXPENSE_CATEGORY : REMOVE_INCOME_CATEGORY,
+        payload: categoryId
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: ERROR,
+        payload: err.response ? err.response.data : "ERROR DELETING TRANSACTION"
       });
     });
 }

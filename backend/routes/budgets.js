@@ -92,18 +92,38 @@ router.route('/:budgetId/categories/:categoryId').put((req, res) => {
 });
 
 // Delete Category
-// query budget
-// query category
-// find isExpense flag 
-// search for another category of that flag 
-// fail if no other category exists 
-// ok so there's other categories to pick up the slack
-// query transactions for one of that category
-// if one exists, fail 
-// otherwise, go ahead and delete the budget 
-// -- fail if it has any transactions 
-// -- fail if it's the only isExpense left 
-// -- fail it it's the only not isExpense left 
+router.route('/:budgetId/categories/:categoryId').delete((req, res) => {
+  Budget.findById(req.params.budgetId)
+    .then(budget => {
+      if(budget) {
+        const category = budget.categories.id(req.params.categoryId);
+        if(category) {
+          // query transactions for one of that category
+          Transaction.find({categoryId: req.params.categoryId}).lean()
+            .then(transactions => {
+              if(transactions === null || transactions.length === 0) {
+                budget.categories.id(req.params.categoryId).remove();
+                budget.save()
+                  .then(_ => res.json(`Deleted budget: ${req.params.categoryId}`))
+                  .catch(err => res.status(500).json('Error: ' + err));
+              } else {
+                res.status(400).json('Cannot delete category with transactions attached');
+              }              
+            })
+            .catch(err => res.status(500).json('Error: ' + err));
+          // if one exists, fail 
+          /*budget.save()
+            .then(_ => res.json(`Deleted budget: ${req.params.categoryId}`))
+            .catch(err => res.status(500).json('Error: ' + err));*/
+        } else {
+          res.status(404).json(`No category found of id ${req.params.categoryId}`);
+        }
+      } else {
+        res.status(404).json(`No budget found of id ${req.params.budgetId}`);
+      }
+    })
+    .catch(err => res.status(500).json('Error: ' + err));
+});
 
 // calculates all the sums, returns all the transactions
 router.route('/:id/report').get((req, res) => {
@@ -182,9 +202,7 @@ const generateReport = (budget, transactions) => {
     expenseTarget,
     expenseTotal,
     incomeTarget,
-    incomeTotal,
-    netTarget: incomeTarget - expenseTarget,
-    netSavings: incomeTotal - expenseTotal
+    incomeTotal
   }
 };
 
