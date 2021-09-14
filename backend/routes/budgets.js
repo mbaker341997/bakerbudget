@@ -72,7 +72,16 @@ router.route('/:id/categories').post((req, res) => {
 
 // Update Category 
 
-// Delete Category 
+// Delete Category
+// query budget
+// query category
+// find isExpense flag 
+// search for another category of that flag 
+// fail if no other category exists 
+// ok so there's other categories to pick up the slack
+// query transactions for one of that category
+// if one exists, fail 
+// otherwise, go ahead and delete the budget 
 // -- fail if it has any transactions 
 // -- fail if it's the only isExpense left 
 // -- fail it it's the only not isExpense left 

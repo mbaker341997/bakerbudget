@@ -29,9 +29,9 @@ const NewBudgetModal = ({ showModal, handleClose, submitBudget, baseBudget, moda
   }
 
   return (
-    <Modal show={showModal}>
+    <Modal show={showModal} onHide={handleClose}>
       <Form onSubmit={handleSubmit}>
-        <Modal.Header>
+        <Modal.Header closeButton>
           <Modal.Title>{ modalTitle }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
