@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import NewCategoryModal from './newCategoryModal';
 import DeleteModal from './deleteModal';
 import { SELECTED_CLASSNAME } from '../constants';
-import { addCategoryAction } from '../context/budgetActions';
+import { addCategoryAction, editCategoryAction } from '../context/budgetActions';
 
 const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTotal, diffTotal, dispatch }) => {
   const baseCategory = {
@@ -15,9 +15,10 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
     target: ""
   };
   const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [editModal, setEditModal] = useState(null);
 
   const handleShowAdd = () => {
     setShowAddModal(true);
@@ -34,6 +35,29 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
 
   const handleShowDelete = () => {
     setShowDeleteModal(true);
+  };
+
+  const handleShowEdit = () => {
+    // category changes dynamically so we can't just switch it on with a flag
+    setEditModal(
+      <NewCategoryModal
+        showModal={true}
+        handleClose={handleCloseEdit}
+        submitCategory={editCategory}
+        baseCategory={selectedItem}
+        modalTitle="Edit Category"
+        reset
+      />
+    );
+  };
+
+  const editCategory = (formData) => {
+    setEditModal(null);
+    editCategoryAction(selectedItem._id, budgetId, formData, dispatch);
+  };
+
+  const handleCloseEdit = () => {
+    setEditModal(null);
   };
 
   const handleCloseDelete = () => {
@@ -76,7 +100,7 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
           selectedRow &&
           <> 
             <Col md="auto">
-              <Button variant="primary" onClick={handleShowAdd}>Edit</Button>
+              <Button variant="primary" onClick={handleShowEdit}>Edit</Button>
             </Col>
             <Col md="auto">
               <Button variant="danger" onClick={handleShowDelete}>Delete</Button>
@@ -127,6 +151,7 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
         modalTitle="Add Category"
         reset
       />
+      { editModal }
       <DeleteModal
         show={showDeleteModal}
         close={handleCloseDelete}

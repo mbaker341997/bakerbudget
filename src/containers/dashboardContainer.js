@@ -99,15 +99,15 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>UD APIs in backend for categories</li>
-          <li>Modify category</li>
+          <li>D APIs in backend for categories</li>
           <li>Delete category</li>
           <li>Error handling (404s, 500s, etc)</li>
           <li>Logging middleware on the backend</li>
           <li>Fontawesome icons</li>
           <li>CLean up totals summary, make it look good</li>
           <li>Consolidations, get the project structure down</li>
-          <li>Tests</li>  
+          <li>Tests</li>
+          <li>Format currency</li>  
           <li>Switch it around to host on heroku (or just with a run script)</li>
         </ul>
         <h4>TODOList for Stretch goals</h4>

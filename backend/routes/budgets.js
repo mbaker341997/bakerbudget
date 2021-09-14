@@ -70,7 +70,26 @@ router.route('/:id/categories').post((req, res) => {
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
-// Update Category 
+// Update Category
+router.route('/:budgetId/categories/:categoryId').put((req, res) => {
+  Budget.findById(req.params.budgetId)
+    .then(budget => {
+      if(budget) {
+        const category = budget.categories.id(req.params.categoryId);
+        if(category) {
+          category.set(req.body);
+          budget.save()
+            .then(_ => res.json(category))
+            .catch(err => res.status(500).json('Error: ' + err));
+        } else {
+          res.status(404).json(`No category found of id ${req.params.categoryId}`);
+        }
+      } else {
+        res.status(404).json(`No budget found of id ${req.params.budgetId}`);
+      }
+    })
+    .catch(err => res.status(500).json('Error: ' + err));
+});
 
 // Delete Category
 // query budget

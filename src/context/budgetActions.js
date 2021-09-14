@@ -109,10 +109,9 @@ export const editTransactionAction = (id, budgetId, data, dispatch) => {
 // note: data only includes those values we allow to be edited from the frontend
 // the transaciton's id and budget id are passed separately
 export const deleteTransactionAction = (id, isExpense, dispatch) => {
-  // axios PUT call 
+  // axios DELETE call 
   axios.delete(`http://localhost:5000/transactions/${id}`)
     .then(_ => {
-      // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
       dispatch({
         type: isExpense ? REMOVE_EXPENSE : REMOVE_INCOME,
         payload: id
@@ -136,6 +135,24 @@ export const addCategoryAction = (budgetId, data, dispatch) => {
         type: data.isExpense ? ADD_EXPENSE_CATEGORY : ADD_INCOME_CATEGORY,
         payload: response.data
       });
+    })
+    .catch(err => {
+      dispatch({
+        type: ERROR,
+        payload: err.response ? err.response.data : "ERROR ADDING CATEGORY"
+      });
+    });
+}
+
+export const editCategoryAction = (categoryId, budgetId, data, dispatch) => {
+  // axios PUT call 
+  axios.put(`http://localhost:5000/budgets/${budgetId}/categories/${categoryId}`, {
+    ...data
+  })
+    .then(_ => {
+      // a lot of the calculation is pushed to the backend so it's easier to re-fetch the list
+      // updates are rare so for now this shortcut is fine
+      fetchBudgetAction(budgetId, dispatch);
     })
     .catch(err => {
       dispatch({
