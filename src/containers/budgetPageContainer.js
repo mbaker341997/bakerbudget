@@ -11,6 +11,7 @@ import DeleteModal from '../components/deleteModal';
 import NewBudgetModal from '../components/newBudgetModal';
 import { BudgetContext } from '../context/budgetProvider';
 import { deleteBudgetAction, editBudgetAction, fetchBudgetAction } from '../context/budgetActions';
+import { CURRENCY_FORMATTER } from '../constants';
 
 const BudgetPageContainer = () => {
   const [showDelete, setShowDelete] = useState(false);
@@ -68,10 +69,10 @@ const BudgetPageContainer = () => {
             </Row>
             <Row> 
               <p>{budgetState.budget.description}</p>
-              <p>Total Income: ${budgetState.budget.incomeTotal}</p>
-              <p>Total Expenses: ${budgetState.budget.expenseTotal}</p>
-              <p>Total Savings: ${budgetState.budget.incomeTotal - budgetState.budget.expenseTotal}{' '} 
-              vs target of ${budgetState.budget.incomeTarget - budgetState.budget.expenseTarget} </p>
+              <p>Total Income: {CURRENCY_FORMATTER.format(budgetState.budget.incomeTotal)}</p>
+              <p>Total Expenses: {CURRENCY_FORMATTER.format(budgetState.budget.expenseTotal)}</p>
+              <p>Total Savings: {CURRENCY_FORMATTER.format(budgetState.budget.incomeTotal - budgetState.budget.expenseTotal)}{' '} 
+              vs target of {CURRENCY_FORMATTER.format(budgetState.budget.incomeTarget - budgetState.budget.expenseTarget)} </p>
               <hr />
             </Row>
             <BudgetTables budget={budgetState.budget} dispatch={budgetDispatch} />

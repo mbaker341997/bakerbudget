@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import NewCategoryModal from './newCategoryModal';
 import DeleteModal from './deleteModal';
-import { SELECTED_CLASSNAME } from '../constants';
+import { CURRENCY_FORMATTER, SELECTED_CLASSNAME } from '../constants';
 import { addCategoryAction, deleteCategoryAction, editCategoryAction } from '../context/budgetActions';
 
 const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTotal, diffTotal, dispatch }) => {
@@ -127,9 +127,9 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
                 <tr key={category._id} id={category._id} onClick={clickCategory}>
                   <td>{category.title}</td>
                   <td>{category.description}</td>
-                  <td>${category.target}</td>
-                  <td>${category.actual}</td>
-                  <td>${category.actual - category.target}</td>
+                  <td>{CURRENCY_FORMATTER.format(category.target)}</td>
+                  <td>{CURRENCY_FORMATTER.format(category.actual)}</td>
+                  <td>{CURRENCY_FORMATTER.format(category.actual - category.target)}</td>
                 </tr>
               )
             })
@@ -139,9 +139,9 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
           <tr>
             <td></td>
             <th>Total</th>
-            <td>${targetTotal}</td>
-            <td>${actualTotal}</td>
-            <td>${diffTotal}</td>
+            <td>{CURRENCY_FORMATTER.format(targetTotal)}</td>
+            <td>{CURRENCY_FORMATTER.format(actualTotal)}</td>
+            <td>{CURRENCY_FORMATTER.format(diffTotal)}</td>
           </tr>
         </tfoot>
       </Table>

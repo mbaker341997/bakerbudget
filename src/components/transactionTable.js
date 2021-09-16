@@ -8,7 +8,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import DeleteModal from './deleteModal';
 import NewTransactionModal from './newTransactionModal';
 import { addTransactionAction, deleteTransactionAction, editTransactionAction } from '../context/budgetActions';
-import { SELECTED_CLASSNAME } from '../constants';
+import { CURRENCY_FORMATTER, SELECTED_CLASSNAME } from '../constants';
 
 const TransactionTable = ({ budgetId, categories, transactions, isExpense, dispatch }) => {
   const baseTransaction = {
@@ -133,7 +133,7 @@ const TransactionTable = ({ budgetId, categories, transactions, isExpense, dispa
                   <td>{transaction.title}</td>
                   <td>{transaction.categoryName}</td>
                   <td>{transaction.date.split('T')[0]}</td>
-                  <td>${transaction.amount}</td>
+                  <td>{CURRENCY_FORMATTER.format(transaction.amount)}</td>
                   <td>{transaction.description}</td>
                 </tr>
               )
