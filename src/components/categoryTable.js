@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import NewCategoryModal from './newCategoryModal';
 import DeleteModal from './deleteModal';
 import { SELECTED_CLASSNAME } from '../constants';
@@ -94,7 +96,7 @@ const CategoryTable = ({ budgetId, categories, isExpense, targetTotal, actualTot
           <h3>Categories</h3>
         </Col>
         <Col md="auto">
-          <Button variant="outline-primary" onClick={handleShowAdd}><b>+</b></Button>
+          <Button variant="outline-primary" onClick={handleShowAdd}><FontAwesomeIcon icon={faPlus}/></Button>
         </Col>
         { 
           selectedRow &&

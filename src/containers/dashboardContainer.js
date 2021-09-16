@@ -112,7 +112,6 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Fontawesome icons</li>
           <li>CLean up totals summary, make it look good</li>
           <li>Consolidations, get the project structure down</li>
           <li>Tests</li>
@@ -132,6 +131,7 @@ const DashboardContainer = () => {
           <li>Intelligent parsing of bank statements to add expenses</li>
           <li>Different users with a login system of some kind</li>
           <li>Bulk transaction adding.</li>
+          <li>New website Icon</li>
           <li>SSL?</li>
         </ul>
       </Row>
