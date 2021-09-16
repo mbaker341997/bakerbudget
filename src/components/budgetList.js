@@ -12,7 +12,7 @@ const BudgetList = ({ budgets }) => {
             <Col className="mb-3" key={budget._id}>
               <Card>
                 <Card.Body>
-                  <Card.Title><Link to={`/${budget._id}`}>{budget.title}</Link></Card.Title>
+                  <Card.Title><Link to={`/budgets/${budget._id}`}>{budget.title}</Link></Card.Title>
                   <Card.Text>{budget.description}</Card.Text>
                 </Card.Body>
               </Card>

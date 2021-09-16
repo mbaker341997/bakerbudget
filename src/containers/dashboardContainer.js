@@ -112,7 +112,6 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Logging middleware on the backend</li>
           <li>Fontawesome icons</li>
           <li>CLean up totals summary, make it look good</li>
           <li>Consolidations, get the project structure down</li>

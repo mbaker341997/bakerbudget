@@ -26,12 +26,12 @@ function App() {
         </header>
         <main>
           <Switch>
-            <Route path="/" children={<DashboardContainer />} />
-            <Route path="/:id">
+            <Route path="/budgets/:id">
               <BudgetProvider>
                 <BudgetPageContainer />
               </BudgetProvider>
             </Route>
+            <Route path="/" children={<DashboardContainer />} />
           </Switch>
         </main>
         <footer className="bg-dark">
