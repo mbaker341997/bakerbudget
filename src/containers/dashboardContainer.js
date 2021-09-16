@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -13,6 +14,7 @@ const DashboardContainer = () => {
   const [newestBudget, setNewestBudget] = useState({});
   const [budgets, setBudgets] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
   const defaultBudget = {
     title: "",
     description: "",
@@ -37,8 +39,15 @@ const DashboardContainer = () => {
     axios.get('http://localhost:5000/budgets')
       .then(result => {
         setBudgets(result.data);
-        setLoading(false);
-    })
+      })
+      .catch(err => {
+        if(err.response) {
+          setError(err.response.data);
+        } else {
+          setError('ERROR LOADING BUDGETS');
+        }
+      })
+      .finally(() => setLoading(false));
   }, [newestBudget]);
 
   const handleAddBudgetClick = () => {
@@ -61,8 +70,11 @@ const DashboardContainer = () => {
         setNewestBudget(response)
       })
       .catch(err => {
-        alert('Error occurred when adding budget!');
-        console.log(`${err}`);
+        if(err.response) {
+          setError(err.response.data);
+        } else {
+          setError('ERROR ADDING BUDGET');
+        }
       });
   };
 
@@ -76,6 +88,7 @@ const DashboardContainer = () => {
           <Button className="float-end" variant="primary" onClick={handleAddBudgetClick}>Add Budget</Button>
         </Col>
       </Row>
+      { error && <Alert variant="danger">{error}</Alert> }
       { 
         loading ? 
           <Spinner animation="border" role="status">
@@ -99,7 +112,6 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Error handling (404s, 500s, etc)</li>
           <li>Logging middleware on the backend</li>
           <li>Fontawesome icons</li>
           <li>CLean up totals summary, make it look good</li>
