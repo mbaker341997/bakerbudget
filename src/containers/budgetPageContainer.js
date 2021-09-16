@@ -67,12 +67,16 @@ const BudgetPageContainer = () => {
                 </div>
               </Col>      
             </Row>
-            <Row> 
-              <p>{budgetState.budget.description}</p>
-              <p>Total Income: {CURRENCY_FORMATTER.format(budgetState.budget.incomeTotal)}</p>
-              <p>Total Expenses: {CURRENCY_FORMATTER.format(budgetState.budget.expenseTotal)}</p>
-              <p>Total Savings: {CURRENCY_FORMATTER.format(budgetState.budget.incomeTotal - budgetState.budget.expenseTotal)}{' '} 
-              vs target of {CURRENCY_FORMATTER.format(budgetState.budget.incomeTarget - budgetState.budget.expenseTarget)} </p>
+            <Row>
+              <Container> 
+                <p>{budgetState.budget.description}</p>
+                <ul>
+                  <li>Total Income: {CURRENCY_FORMATTER.format(budgetState.budget.incomeTotal)}</li>
+                  <li>Total Expenses: {CURRENCY_FORMATTER.format(budgetState.budget.expenseTotal)}</li>
+                  <li>Total Savings: {CURRENCY_FORMATTER.format(budgetState.budget.incomeTotal - budgetState.budget.expenseTotal)}{' '} 
+                  vs target of {CURRENCY_FORMATTER.format(budgetState.budget.incomeTarget - budgetState.budget.expenseTarget)} </li>
+                </ul>
+              </Container>
               <hr />
             </Row>
             <BudgetTables budget={budgetState.budget} dispatch={budgetDispatch} />

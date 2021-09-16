@@ -112,9 +112,7 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>CLean up totals summary, make it look good</li>
           <li>Consolidations, get the project structure down</li>
-          <li>Only pick one budget from all 4 tables</li> 
           <li>Tests</li>
           <li>Switch it around to host on heroku (or just with a run script)</li>
         </ul>
