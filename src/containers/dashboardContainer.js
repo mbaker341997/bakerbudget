@@ -34,7 +34,6 @@ const DashboardContainer = () => {
     ] 
   };
 
-  // TODO: error handling
   useEffect(() => {
     axios.get('http://localhost:5000/budgets')
       .then(result => {
@@ -95,7 +94,7 @@ const DashboardContainer = () => {
             <span className="visually-hidden">Loading...</span>
           </Spinner> : <BudgetList budgets={budgets}/>
       }
-      <NewBudgetModal 
+      <NewBudgetModal
         showModal={showModal} 
         handleClose={handleCloseAddBudget} 
         submitBudget={addBudget}
@@ -113,23 +112,40 @@ const DashboardContainer = () => {
         <h4>TODOList for MVP</h4>
         <ul>
           <li>Consolidations, get the project structure down</li>
+          <ul>
+            <li>Try to consolidate their tables</li>
+            <li>Simplify the reducers</li>
+            <li>Organize the directories</li>
+          </ul>
+          <li>Have react in a client directory with the backend being top-level</li>
           <li>Tests</li>
-          <li>Switch it around to host on heroku (or just with a run script)</li>
+          <ul>
+            <li>Unit test backend</li>
+            <li>Unit test frontend</li>
+            <li>Coverage for both</li>
+            <li>Integ tests?</li>
+          </ul>
+          <li>Host on RPi</li>
         </ul>
         <h4>TODOList for Stretch goals</h4>
         <ul>
-          <li>Add/edit icons on the card view of the budget</li>
+          <li>Linter</li>
+          <li>Prettifier</li>
+          <li>Graphs on the report (chart js integration)</li>
           <li>Color-coding of categories where you've overspent, under-received</li>
-          <li>Website dark mode</li>
+          <li>Table sorting (alphabetical, by date, by amount)</li>
           <li>Summaries of budget performance on the card view</li>
           <li>Hard-coded budget templates</li>
           <li>CRUD the templates on the backend</li>
-          <li>Graphs on the report</li>
-          <li>Intelligent parsing of bank statements to add expenses</li>
-          <li>Different users with a login system of some kind</li>
+          <li>Templates page/view</li>
+          <li>Create template from budget</li>
+          <li>Website dark mode (sass?)</li>
+          <li>New website favicon</li>
           <li>Bulk transaction adding.</li>
-          <li>New website Icon</li>
-          <li>SSL?</li>
+          <li>Line chart comparison of different budgets (incl specify as monthly)</li>
+          <li>Intelligent parsing of bank statements to add expenses</li>
+          <li>SSL</li>
+          <li>Different users with a login system of some kind</li>
         </ul>
       </Row>
     </Container>
