@@ -1,6 +1,6 @@
-import NewTransactionModal from './newTransactionModal';
-import { addTransactionAction, deleteTransactionAction, editTransactionAction } from '../context/budgetActions';
-import { CURRENCY_FORMATTER } from '../constants';
+import NewTransactionModal from '../modals/newTransactionModal';
+import { addTransactionAction, deleteTransactionAction, editTransactionAction } from '../../context/budgetActions';
+import { CURRENCY_FORMATTER } from '../../constants/formatters';
 import ItemTable from './itemTable';
 
 const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {

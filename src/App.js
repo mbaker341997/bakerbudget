@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
-import BudgetPageContainer from './containers/budgetPageContainer';
-import DashboardContainer from './containers/dashboardContainer';
+import BudgetPageContainer from './components/containers/budgetPageContainer';
+import DashboardContainer from './components/containers/dashboardContainer';
 import { BudgetProvider } from './context/budgetProvider';
 
 function App() {

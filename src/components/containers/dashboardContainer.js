@@ -5,9 +5,9 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Spinner from 'react-bootstrap/Spinner'
-import BudgetList from '../components/budgetList';
-import NewBudgetModal from '../components/newBudgetModal';
+import Spinner from 'react-bootstrap/Spinner';
+import BudgetList from '../budgetList';
+import NewBudgetModal from '../modals/newBudgetModal';
 
 const DashboardContainer = () => {
   const [loading, setLoading] = useState(true);
@@ -103,10 +103,6 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>Consolidations, get the project structure down</li>
-          <ul>
-            <li>Organize the directories</li>
-          </ul>
           <li>Have react in a client directory with the backend being top-level</li>
           <li>Tests</li>
           <ul>

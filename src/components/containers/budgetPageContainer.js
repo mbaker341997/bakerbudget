@@ -1,17 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import BudgetTables from '../components/budgetTables';
+import BudgetTablesContainer from './budgetTablesContainer';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Spinner from 'react-bootstrap/Spinner'
-import DeleteModal from '../components/deleteModal';
-import NewBudgetModal from '../components/newBudgetModal';
-import { BudgetContext } from '../context/budgetProvider';
-import { deleteBudgetAction, editBudgetAction, fetchBudgetAction } from '../context/budgetActions';
-import { CURRENCY_FORMATTER } from '../constants';
+import DeleteModal from '../modals/deleteModal';
+import NewBudgetModal from '../modals/newBudgetModal';
+import { BudgetContext } from '../../context/budgetProvider';
+import { deleteBudgetAction, editBudgetAction, fetchBudgetAction } from '../../context/budgetActions';
+import { CURRENCY_FORMATTER } from '../../constants/formatters';
 
 const BudgetPageContainer = () => {
   const [showDelete, setShowDelete] = useState(false);
@@ -63,7 +63,7 @@ const BudgetPageContainer = () => {
               </Container>
               <hr />
             </Row>
-            <BudgetTables budget={budgetState.budget} dispatch={budgetDispatch} />
+            <BudgetTablesContainer budget={budgetState.budget} dispatch={budgetDispatch} />
             <DeleteModal
               show={showDelete}
               close={() => setShowDelete(false)}

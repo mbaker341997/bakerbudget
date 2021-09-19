@@ -1,7 +1,7 @@
-import { CURRENCY_FORMATTER } from '../constants';
-import { addCategoryAction, deleteCategoryAction, editCategoryAction } from '../context/budgetActions';
+import { CURRENCY_FORMATTER } from '../../constants/formatters';
+import { addCategoryAction, deleteCategoryAction, editCategoryAction } from '../../context/budgetActions';
 import ItemTable from './itemTable';
-import NewCategoryModal from './newCategoryModal';
+import NewCategoryModal from '../modals/newCategoryModal';
 
 const CategoryTable = ({ 
   budgetId, 

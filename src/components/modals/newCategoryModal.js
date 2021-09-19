@@ -1,22 +1,21 @@
 import Form from 'react-bootstrap/Form';
 import FormModal from './formModal';
-import useFormState from '../hooks/useFormState';
+import useFormState from '../../hooks/useFormState';
 
-// "New" is a misnomer, also applicable on updates
-// budget data is meant to contain only that information that the form submits, nothing else. so not the entire budget
-const NewBudgetModal = ({ 
+// TODO: enforce proptype contract
+const NewCategoryModal = ({ 
   showModal, 
   handleClose, 
   submit, 
   base, 
   modalTitle, 
-  reset, 
-  children 
+  reset 
 }) => {
   const [modalData, handleChange, handleSubmit] = useFormState({
     title: base.title,
-    description: base.description
-  }, submit, reset)
+    description: base.description,
+    target: base.target
+  }, submit, reset);
 
   return (
     <FormModal
@@ -25,8 +24,7 @@ const NewBudgetModal = ({
       handleSubmit={handleSubmit}
       modalTitle={modalTitle}
     >
-      { children }
-      <Form.Group className="mb-3" controlId="newBudgetForm.TitleInput">
+      <Form.Group className="mb-3" controlId="newCategoryForm.TitleInput">
         <Form.Label>Title</Form.Label>
         <Form.Control 
           as="input" 
@@ -35,7 +33,19 @@ const NewBudgetModal = ({
           onChange={handleChange} 
         />
       </Form.Group>  
-      <Form.Group className="mb-3" controlId="newBudgetForm.DescriptionTextArea">
+      <Form.Group className="mb-3" controlId="newCategoryForm.TargetInput">
+        <Form.Label>Amount</Form.Label>
+        <Form.Control 
+          as="input" 
+          name="target"
+          type="number"
+          min="0" 
+          step="0.01"
+          value={modalData.target} 
+          onChange={handleChange} 
+        />
+      </Form.Group>  
+      <Form.Group className="mb-3" controlId="newCategoryForm.DescriptionTextArea">
         <Form.Label>Description</Form.Label>
         <Form.Control 
           as="textarea" 
@@ -44,9 +54,9 @@ const NewBudgetModal = ({
           value={modalData.description} 
           onChange={handleChange}
         />
-      </Form.Group> 
+      </Form.Group>     
     </FormModal>
   )
 };
 
-export default NewBudgetModal;
+export default NewCategoryModal;

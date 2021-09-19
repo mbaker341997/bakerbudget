@@ -7,7 +7,7 @@ import {
   REMOVE_TRANSACTION,
   SET_LOADING_BUDGET,
   REMOVE_CATEGORY
-} from './budgetActionTypes';
+} from '../constants/budgetActionTypes';
 
 const addTransactionToBudget = (transaction, budget) => {
   const catIndex = budget.categories.findIndex(category => category._id === transaction.categoryId);

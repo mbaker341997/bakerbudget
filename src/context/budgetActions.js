@@ -8,7 +8,7 @@ import {
   REMOVE_TRANSACTION,
   ADD_CATEGORY,
   REMOVE_CATEGORY
-} from './budgetActionTypes';
+} from '../constants/budgetActionTypes';
 
 export const fetchBudgetAction = (id, dispatch) => {
   axios.get(`http://localhost:5000/budgets/${id}/report`).then(result => {

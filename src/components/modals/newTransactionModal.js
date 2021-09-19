@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/Form';
 import FormModal from './formModal';
-import useFormState from '../hooks/useFormState';
+import useFormState from '../../hooks/useFormState';
 
 // "New" is a misnomer, also applicable on updates
 const NewTransactionModal = ({ 

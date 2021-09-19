@@ -1,10 +1,10 @@
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import CategoryTable from './categoryTable';
-import TransactionTable from './transactionTable';
+import CategoryTable from '../tables/categoryTable';
+import TransactionTable from '../tables/transactionTable';
 
 // TODO: probably will divide this into two once we start adding graphs
-const BudgetTables = ({ budget, dispatch }) => {
+const BudgetTablesContainer = ({ budget, dispatch }) => {
   const filterCategoriesByIsExpense = (isExpense) => budget.categories.filter(category => category.isExpense === isExpense);
   const filterTransactionsByIsExpense = (isExpense) => budget.transactions.filter(transaction => transaction.isExpense === isExpense);
 
@@ -50,4 +50,4 @@ const BudgetTables = ({ budget, dispatch }) => {
   )
 };
 
-export default BudgetTables;
+export default BudgetTablesContainer;

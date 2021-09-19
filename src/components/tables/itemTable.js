@@ -5,8 +5,9 @@ import Row from 'react-bootstrap/Row';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import DeleteModal from './deleteModal';
-import { SELECTED_CLASSNAME } from '../constants';
+import DeleteModal from '../modals/deleteModal';
+
+const SELECTED_CLASSNAME = "selectedRow";
 
 const ItemTable = ({
   title,
