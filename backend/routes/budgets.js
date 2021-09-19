@@ -111,10 +111,6 @@ router.route('/:budgetId/categories/:categoryId').delete((req, res) => {
               }              
             })
             .catch(err => res.status(500).json('Error: ' + err));
-          // if one exists, fail 
-          /*budget.save()
-            .then(_ => res.json(`Deleted budget: ${req.params.categoryId}`))
-            .catch(err => res.status(500).json('Error: ' + err));*/
         } else {
           res.status(404).json(`No category found of id ${req.params.categoryId}`);
         }

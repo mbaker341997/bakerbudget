@@ -2,19 +2,20 @@ import Form from 'react-bootstrap/Form';
 import FormModal from './formModal';
 import useFormState from '../hooks/useFormState';
 
+// TODO: enforce proptype contract
 const NewCategoryModal = ({ 
   showModal, 
   handleClose, 
-  submitCategory, 
-  baseCategory, 
+  submit, 
+  base, 
   modalTitle, 
   reset 
 }) => {
   const [modalData, handleChange, handleSubmit] = useFormState({
-    title: baseCategory.title,
-    description: baseCategory.description,
-    target: baseCategory.target
-  }, submitCategory, reset);
+    title: base.title,
+    description: base.description,
+    target: base.target
+  }, submit, reset);
 
   return (
     <FormModal

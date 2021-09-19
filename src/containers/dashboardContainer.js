@@ -114,7 +114,7 @@ const DashboardContainer = () => {
           <li>Consolidations, get the project structure down</li>
           <ul>
             <li>Try to consolidate their tables</li>
-            <li>Simplify the reducers</li>
+            <li>Simplify the reducers (in report api return one category and transaction list)</li>
             <li>Organize the directories</li>
           </ul>
           <li>Have react in a client directory with the backend being top-level</li>
@@ -125,20 +125,25 @@ const DashboardContainer = () => {
             <li>Coverage for both</li>
             <li>Integ tests?</li>
           </ul>
-          <li>Host on RPi</li>
-        </ul>
-        <h4>TODOList for Stretch goals</h4>
-        <ul>
           <li>Linter</li>
           <li>Prettifier</li>
           <li>Graphs on the report (chart js integration)</li>
+          <ul>
+            <li>Bar graphs of income vs actual</li>
+            <li>Bar graphs actuals vs expected</li>
+            <li>Pie graph of category compositions expected and actual</li>
+          </ul>
           <li>Color-coding of categories where you've overspent, under-received</li>
-          <li>Table sorting (alphabetical, by date, by amount)</li>
           <li>Summaries of budget performance on the card view</li>
           <li>Hard-coded budget templates</li>
           <li>CRUD the templates on the backend</li>
           <li>Templates page/view</li>
           <li>Create template from budget</li>
+          <li>Host on RPi</li>
+        </ul>
+        <h4>TODOList for Stretch goals</h4>
+        <ul>
+          <li>Table sorting (alphabetical, by date, by amount)</li>
           <li>Website dark mode (sass?)</li>
           <li>New website favicon</li>
           <li>Bulk transaction adding.</li>
