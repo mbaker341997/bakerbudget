@@ -1,177 +1,199 @@
-const router = require('express').Router();
-const Budget = require('../models/budget.model');
-const Transaction = require('../models/transaction.model');
+const router = require("express").Router();
+const Budget = require("../models/budget.model");
+const Transaction = require("../models/transaction.model");
 
-router.route('/').get((_, res) => {
+router.route("/").get((_, res) => {
   Budget.find()
-    .then(budgets => res.json(budgets))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then((budgets) => res.json(budgets))
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route('/').post((req, res) => {
+router.route("/").post((req, res) => {
   const budget = new Budget(req.body);
-  budget.save()
-    .then(saved => res.json({ id: saved._id }))
-    .catch(err => res.status(500).json('Error: ' + err));
+  budget
+    .save()
+    .then((saved) => res.json({ id: saved._id }))
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
-router.route('/:id').get((req, res) => {
+router.route("/:id").get((req, res) => {
   Budget.findById(req.params.id)
-    .then(budget => budget ? res.json(budget) : res.status(404).json(`No budget found of id ${req.params.id}`))
-    .catch(err => res.status(500).json('Error: ' + err));
+    .then((budget) =>
+      budget
+        ? res.json(budget)
+        : res.status(404).json(`No budget found of id ${req.params.id}`)
+    )
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
-router.route('/:id').delete((req, res) => {
+router.route("/:id").delete((req, res) => {
   Budget.findByIdAndDelete(req.params.id)
     .then(() => res.json(`Deleted budget: ${req.params.id}`))
-    .catch(err => res.status(500).json('Error: ' + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
-router.route('/:id').put((req, res) => {
+router.route("/:id").put((req, res) => {
   Budget.findByIdAndUpdate(req.params.id, req.body)
-    .then(budget => {
-      if(!budget) {
-        res.status(404).json(`No budget found of id ${req.params.id}`)
+    .then((budget) => {
+      if (!budget) {
+        res.status(404).json(`No budget found of id ${req.params.id}`);
       } else {
         res.json({ id: budget._id });
       }
     })
-    .catch(err => res.status(500).json('Error: ' + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
-router.route('/:id/transactions').get((req, res) => {
+router.route("/:id/transactions").get((req, res) => {
   Budget.findById(req.params.id)
-    .then(budget => {
-      if(budget) {
-        Transaction.find({budgetId: req.params.id})
-          .then(transactions => res.json(transactions))
-          .catch(err => res.status(500).json('Error: ' + err));
+    .then((budget) => {
+      if (budget) {
+        Transaction.find({ budgetId: req.params.id })
+          .then((transactions) => res.json(transactions))
+          .catch((err) => res.status(500).json("Error: " + err));
       } else {
         res.status(404).json(`No budget found of id ${req.params.id}`);
       }
     })
-    .catch(err => res.status(500).json('Error: ' + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
-// Create Category 
-router.route('/:id/categories').post((req, res) => {
+// Create Category
+router.route("/:id/categories").post((req, res) => {
   Budget.findById(req.params.id)
-    .then(budget => {
-      if(budget) {
+    .then((budget) => {
+      if (budget) {
         const catLength = budget.categories.push(req.body);
-        const newCategory = budget.categories[catLength-1].toObject();
-        budget.save()
-          .then(_ => res.json(newCategory))
-          .catch(err => res.status(500).json('Error: ' + err));
+        const newCategory = budget.categories[catLength - 1].toObject();
+        budget
+          .save()
+          .then((_) => res.json(newCategory))
+          .catch((err) => res.status(500).json("Error: " + err));
       } else {
         res.status(404).json(`No budget found of id ${req.params.id}`);
       }
     })
-    .catch(err => res.status(500).json('Error: ' + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 // Update Category
-router.route('/:budgetId/categories/:categoryId').put((req, res) => {
+router.route("/:budgetId/categories/:categoryId").put((req, res) => {
   Budget.findById(req.params.budgetId)
-    .then(budget => {
-      if(budget) {
+    .then((budget) => {
+      if (budget) {
         const category = budget.categories.id(req.params.categoryId);
-        if(category) {
+        if (category) {
           category.set(req.body);
-          budget.save()
-            .then(_ => res.json(category))
-            .catch(err => res.status(500).json('Error: ' + err));
+          budget
+            .save()
+            .then((_) => res.json(category))
+            .catch((err) => res.status(500).json("Error: " + err));
         } else {
-          res.status(404).json(`No category found of id ${req.params.categoryId}`);
+          res
+            .status(404)
+            .json(`No category found of id ${req.params.categoryId}`);
         }
       } else {
         res.status(404).json(`No budget found of id ${req.params.budgetId}`);
       }
     })
-    .catch(err => res.status(500).json('Error: ' + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 // Delete Category
-router.route('/:budgetId/categories/:categoryId').delete((req, res) => {
+router.route("/:budgetId/categories/:categoryId").delete((req, res) => {
   Budget.findById(req.params.budgetId)
-    .then(budget => {
-      if(budget) {
+    .then((budget) => {
+      if (budget) {
         const category = budget.categories.id(req.params.categoryId);
-        if(category) {
+        if (category) {
           // query transactions for one of that category
-          Transaction.find({categoryId: req.params.categoryId}).lean()
-            .then(transactions => {
-              if(transactions === null || transactions.length === 0) {
+          Transaction.find({ categoryId: req.params.categoryId })
+            .lean()
+            .then((transactions) => {
+              if (transactions === null || transactions.length === 0) {
                 budget.categories.id(req.params.categoryId).remove();
-                budget.save()
-                  .then(_ => res.json(`Deleted budget: ${req.params.categoryId}`))
-                  .catch(err => res.status(500).json('Error: ' + err));
+                budget
+                  .save()
+                  .then((_) =>
+                    res.json(`Deleted budget: ${req.params.categoryId}`)
+                  )
+                  .catch((err) => res.status(500).json("Error: " + err));
               } else {
-                res.status(400).json('Cannot delete category with transactions attached');
-              }              
+                res
+                  .status(400)
+                  .json("Cannot delete category with transactions attached");
+              }
             })
-            .catch(err => res.status(500).json('Error: ' + err));
+            .catch((err) => res.status(500).json("Error: " + err));
         } else {
-          res.status(404).json(`No category found of id ${req.params.categoryId}`);
+          res
+            .status(404)
+            .json(`No category found of id ${req.params.categoryId}`);
         }
       } else {
         res.status(404).json(`No budget found of id ${req.params.budgetId}`);
       }
     })
-    .catch(err => res.status(500).json('Error: ' + err));
+    .catch((err) => res.status(500).json("Error: " + err));
 });
 
 // calculates all the sums, returns all the transactions
-router.route('/:id/report').get((req, res) => {
+router.route("/:id/report").get((req, res) => {
   Budget.findById(req.params.id)
-    .then(budget => {
-      if(budget) {
-        Transaction.find({budgetId: req.params.id})
-          .then(transactions => res.json(generateReport(budget, transactions)))
-          .catch(err => res.status(500).json('Error: ' + err));
+    .then((budget) => {
+      if (budget) {
+        Transaction.find({ budgetId: req.params.id })
+          .then((transactions) =>
+            res.json(generateReport(budget, transactions))
+          )
+          .catch((err) => res.status(500).json("Error: " + err));
       } else {
         res.status(404).json(`No budget found of id ${req.params.id}`);
       }
     })
-    .catch(err => res.status(500).json('Error: ' + err));
-}); 
+    .catch((err) => res.status(500).json("Error: " + err));
+});
 
 const generateReport = (budget, transactions) => {
   const categoryMap = {};
   const transactionsWithCategoryInfo = [];
-  transactions.forEach(transaction => {
+  transactions.forEach((transaction) => {
     const category = budget.categories.id(transaction.categoryId);
     const currentCategorySum = categoryMap[category._id];
-    categoryMap[category._id] = currentCategorySum > 0 ? currentCategorySum + transaction.amount : transaction.amount;
-    
+    categoryMap[category._id] =
+      currentCategorySum > 0
+        ? currentCategorySum + transaction.amount
+        : transaction.amount;
+
     // adding isExpense to the individual category saves us time having to perform a lookup on the client side
     transactionsWithCategoryInfo.push({
       ...transaction.toObject(),
       categoryName: category.title,
-      isExpense: category.isExpense
+      isExpense: category.isExpense,
     });
   });
 
-  var expenseTotal = 0; // total money spent
-  var expenseTarget = 0; 
-  var incomeTotal = 0; // total money saved 
-  var incomeTarget = 0;
+  let expenseTotal = 0; // total money spent
+  let expenseTarget = 0;
+  let incomeTotal = 0; // total money saved
+  let incomeTarget = 0;
   const categoriesWithActuals = [];
-  budget.categories.forEach(category => {
+  budget.categories.forEach((category) => {
     const actual = categoryMap[category._id] ? categoryMap[category._id] : 0;
 
-    if(category.isExpense) {
+    if (category.isExpense) {
       expenseTotal += actual;
       expenseTarget += category.target;
     } else {
       incomeTotal += actual;
-      incomeTarget += category.target; 
+      incomeTarget += category.target;
     }
 
     categoriesWithActuals.push({
       ...category.toObject(),
-      actual
-    })
+      actual,
+    });
   });
 
   return {
@@ -179,14 +201,14 @@ const generateReport = (budget, transactions) => {
     title: budget.title,
     description: budget.description,
     createdAt: budget.createdAt,
-    updatedAt: budget.updatedAt, 
+    updatedAt: budget.updatedAt,
     categories: categoriesWithActuals,
     transactions: transactionsWithCategoryInfo,
     expenseTarget,
     expenseTotal,
     incomeTarget,
-    incomeTotal
-  }
+    incomeTotal,
+  };
 };
 
 module.exports = router;

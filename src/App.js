@@ -1,15 +1,11 @@
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import BudgetPageContainer from './components/containers/budgetPageContainer';
-import DashboardContainer from './components/containers/dashboardContainer';
-import { BudgetProvider } from './context/budgetProvider';
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Navbar from "react-bootstrap/Navbar";
+import BudgetPageContainer from "./components/containers/budgetPageContainer";
+import DashboardContainer from "./components/containers/dashboardContainer";
+import { BudgetProvider } from "./context/budgetProvider";
 
 function App() {
   return (
@@ -22,7 +18,7 @@ function App() {
                 The BakerBudget
               </Navbar.Brand>
             </Container>
-          </Navbar> 
+          </Navbar>
         </header>
         <main>
           <Switch>
@@ -31,7 +27,9 @@ function App() {
                 <BudgetPageContainer />
               </BudgetProvider>
             </Route>
-            <Route path="/" children={<DashboardContainer />} />
+            <Route path="/">
+              <DashboardContainer />
+            </Route>
           </Switch>
         </main>
         <footer className="bg-dark">

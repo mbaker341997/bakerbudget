@@ -1,16 +1,21 @@
-import { CURRENCY_FORMATTER } from '../../constants/formatters';
-import { addCategoryAction, deleteCategoryAction, editCategoryAction } from '../../context/budgetActions';
-import ItemTable from './itemTable';
-import NewCategoryModal from '../modals/newCategoryModal';
+import React from "react";
+import { CURRENCY_FORMATTER } from "../../constants/formatters";
+import {
+  addCategoryAction,
+  deleteCategoryAction,
+  editCategoryAction,
+} from "../../context/budgetActions";
+import ItemTable from "./itemTable";
+import NewCategoryModal from "../modals/newCategoryModal";
 
-const CategoryTable = ({ 
-  budgetId, 
-  categories, 
-  isExpense, 
-  targetTotal, 
-  actualTotal, 
-  diffTotal, 
-  dispatch 
+const CategoryTable = ({
+  budgetId,
+  categories,
+  isExpense,
+  targetTotal,
+  actualTotal,
+  diffTotal,
+  dispatch,
 }) => {
   const generateCategoryRow = (category, onClick) => {
     return (
@@ -21,12 +26,12 @@ const CategoryTable = ({
         <td>{CURRENCY_FORMATTER.format(category.actual)}</td>
         <td>{CURRENCY_FORMATTER.format(category.actual - category.target)}</td>
       </tr>
-    )
+    );
   };
 
   return (
     <>
-      <ItemTable 
+      <ItemTable
         title="Categories"
         headerRow={
           <tr>
@@ -35,7 +40,7 @@ const CategoryTable = ({
             <th>Target</th>
             <th>Actual</th>
             <th>Diff</th>
-          </tr>  
+          </tr>
         }
         generateRowFunc={generateCategoryRow}
         footerRow={
@@ -49,18 +54,24 @@ const CategoryTable = ({
         }
         data={categories}
         itemName="Category"
-        deleteItem={(category_id) => deleteCategoryAction(category_id, budgetId, dispatch)}
-        addItem={(formData) => addCategoryAction(budgetId, { ...formData, isExpense }, dispatch)}
-        editItem={(category_id, formData) => editCategoryAction(category_id, budgetId, formData, dispatch)}
+        deleteItem={(categoryId) =>
+          deleteCategoryAction(categoryId, budgetId, dispatch)
+        }
+        addItem={(formData) =>
+          addCategoryAction(budgetId, { ...formData, isExpense }, dispatch)
+        }
+        editItem={(categoryId, formData) =>
+          editCategoryAction(categoryId, budgetId, formData, dispatch)
+        }
         baseItem={{
           title: "",
           description: "",
-          target: ""
+          target: "",
         }}
         AddModal={NewCategoryModal}
       />
     </>
-  )
-}
+  );
+};
 
 export default CategoryTable;

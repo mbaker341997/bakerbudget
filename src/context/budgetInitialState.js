@@ -1,7 +1,7 @@
 const budgetInitialState = {
   loading: true,
   error: false,
-  budget: null
-}
+  budget: null,
+};
 
 export default budgetInitialState;

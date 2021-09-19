@@ -1,22 +1,27 @@
-import Form from 'react-bootstrap/Form';
-import FormModal from './formModal';
-import useFormState from '../../hooks/useFormState';
+import React from "react";
+import Form from "react-bootstrap/Form";
+import FormModal from "./formModal";
+import useFormState from "../../hooks/useFormState";
 
 // "New" is a misnomer, also applicable on updates
 // budget data is meant to contain only that information that the form submits, nothing else. so not the entire budget
-const NewBudgetModal = ({ 
-  showModal, 
-  handleClose, 
-  submit, 
-  base, 
-  modalTitle, 
-  reset, 
-  children 
+const NewBudgetModal = ({
+  showModal,
+  handleClose,
+  submit,
+  base,
+  modalTitle,
+  reset,
+  children,
 }) => {
-  const [modalData, handleChange, handleSubmit] = useFormState({
-    title: base.title,
-    description: base.description
-  }, submit, reset)
+  const [modalData, handleChange, handleSubmit] = useFormState(
+    {
+      title: base.title,
+      description: base.description,
+    },
+    submit,
+    reset
+  );
 
   return (
     <FormModal
@@ -25,28 +30,31 @@ const NewBudgetModal = ({
       handleSubmit={handleSubmit}
       modalTitle={modalTitle}
     >
-      { children }
+      {children}
       <Form.Group className="mb-3" controlId="newBudgetForm.TitleInput">
         <Form.Label>Title</Form.Label>
-        <Form.Control 
-          as="input" 
+        <Form.Control
+          as="input"
           name="title"
-          value={modalData.title} 
-          onChange={handleChange} 
-        />
-      </Form.Group>  
-      <Form.Group className="mb-3" controlId="newBudgetForm.DescriptionTextArea">
-        <Form.Label>Description</Form.Label>
-        <Form.Control 
-          as="textarea" 
-          rows={3} 
-          name="description" 
-          value={modalData.description} 
+          value={modalData.title}
           onChange={handleChange}
         />
-      </Form.Group> 
+      </Form.Group>
+      <Form.Group
+        className="mb-3"
+        controlId="newBudgetForm.DescriptionTextArea"
+      >
+        <Form.Label>Description</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={3}
+          name="description"
+          value={modalData.description}
+          onChange={handleChange}
+        />
+      </Form.Group>
     </FormModal>
-  )
+  );
 };
 
 export default NewBudgetModal;

@@ -1,20 +1,23 @@
-import React, { createContext, useReducer } from 'react';
-import budgetInitialState from './budgetInitialState';
-import budgetReducer from './budgetReducer';
+import React, { createContext, useReducer } from "react";
+import budgetInitialState from "./budgetInitialState";
+import budgetReducer from "./budgetReducer";
 
 export const BudgetContext = createContext({});
 
 export const BudgetProvider = ({ children }) => {
-  const [budgetState, budgetDispatch] = useReducer(budgetReducer, budgetInitialState);
+  const [budgetState, budgetDispatch] = useReducer(
+    budgetReducer,
+    budgetInitialState
+  );
 
   return (
     <BudgetContext.Provider
       value={{
         budgetState,
-        budgetDispatch
+        budgetDispatch,
       }}
     >
-      { children }
+      {children}
     </BudgetContext.Provider>
-  )
+  );
 };
