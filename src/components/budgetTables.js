@@ -3,15 +3,18 @@ import Row from 'react-bootstrap/Row';
 import CategoryTable from './categoryTable';
 import TransactionTable from './transactionTable';
 
-
+// TODO: probably will divide this into two once we start adding graphs
 const BudgetTables = ({ budget, dispatch }) => {
+  const filterCategoriesByIsExpense = (isExpense) => budget.categories.filter(category => category.isExpense === isExpense);
+  const filterTransactionsByIsExpense = (isExpense) => budget.transactions.filter(transaction => transaction.isExpense === isExpense);
+
   return (
     <Container>
       <Row>
         <h2>Incomes</h2>
         <CategoryTable
           budgetId={budget._id} 
-          categories={budget.incomeCategories}
+          categories={filterCategoriesByIsExpense(false)}
           isExpense={false} 
           targetTotal={budget.incomeTarget} 
           actualTotal={budget.incomeTotal} 
@@ -20,9 +23,8 @@ const BudgetTables = ({ budget, dispatch }) => {
         />
         <TransactionTable 
           budgetId={budget._id} 
-          categories={budget.incomeCategories}
-          transactions={budget.incomeTransactions}
-          isExpense={false}
+          categories={filterCategoriesByIsExpense(false)}
+          transactions={filterTransactionsByIsExpense(false)}
           dispatch={dispatch}
         />
       </Row>
@@ -30,7 +32,7 @@ const BudgetTables = ({ budget, dispatch }) => {
         <h2>Expenses</h2>
         <CategoryTable 
           budgetId={budget._id}
-          categories={budget.expenseCategories}
+          categories={filterCategoriesByIsExpense(true)}
           isExpense={true} 
           targetTotal={budget.expenseTarget} 
           actualTotal={budget.expenseTotal} 
@@ -39,9 +41,8 @@ const BudgetTables = ({ budget, dispatch }) => {
         />
         <TransactionTable 
           budgetId={budget._id} 
-          categories={budget.expenseCategories}
-          transactions={budget.expenseTransactions}
-          isExpense={true}
+          categories={filterCategoriesByIsExpense(true)}
+          transactions={filterTransactionsByIsExpense(true)}
           dispatch={dispatch}
         />  
       </Row>

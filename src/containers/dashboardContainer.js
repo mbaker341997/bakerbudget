@@ -105,7 +105,6 @@ const DashboardContainer = () => {
         <ul>
           <li>Consolidations, get the project structure down</li>
           <ul>
-            <li>Simplify the reducers (in report api return one category and transaction list)</li>
             <li>Organize the directories</li>
           </ul>
           <li>Have react in a client directory with the backend being top-level</li>

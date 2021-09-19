@@ -49,7 +49,7 @@ const CategoryTable = ({
         }
         data={categories}
         itemName="Category"
-        deleteItem={(category_id) => deleteCategoryAction(category_id, budgetId, isExpense, dispatch)}
+        deleteItem={(category_id) => deleteCategoryAction(category_id, budgetId, dispatch)}
         addItem={(formData) => addCategoryAction(budgetId, { ...formData, isExpense }, dispatch)}
         editItem={(category_id, formData) => editCategoryAction(category_id, budgetId, formData, dispatch)}
         baseItem={{

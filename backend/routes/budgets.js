@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Budget = require('../models/budget.model');
 const Transaction = require('../models/transaction.model');
 
-router.route('/').get((req, res) => {
+router.route('/').get((_, res) => {
   Budget.find()
     .then(budgets => res.json(budgets))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -138,51 +138,40 @@ router.route('/:id/report').get((req, res) => {
 
 const generateReport = (budget, transactions) => {
   const categoryMap = {};
-  const incomeTransactions = [];
-  const expenseTransactions = [];
+  const transactionsWithCategoryInfo = [];
   transactions.forEach(transaction => {
     const category = budget.categories.id(transaction.categoryId);
     const currentCategorySum = categoryMap[category._id];
     categoryMap[category._id] = currentCategorySum > 0 ? currentCategorySum + transaction.amount : transaction.amount;
     
-    if(category.isExpense) {
-      expenseTransactions.push({
-        ...transaction.toObject(),
-        categoryName: category.title
-      });
-    } else {
-      incomeTransactions.push({
-        ...transaction.toObject(),
-        categoryName: category.title
-      });
-    }
-    
+    // adding isExpense to the individual category saves us time having to perform a lookup on the client side
+    transactionsWithCategoryInfo.push({
+      ...transaction.toObject(),
+      categoryName: category.title,
+      isExpense: category.isExpense
+    });
   });
 
   var expenseTotal = 0; // total money spent
   var expenseTarget = 0; 
   var incomeTotal = 0; // total money saved 
   var incomeTarget = 0;
-  const incomeCategories = [];
-  const expenseCategories = [];
+  const categoriesWithActuals = [];
   budget.categories.forEach(category => {
     const actual = categoryMap[category._id] ? categoryMap[category._id] : 0;
 
     if(category.isExpense) {
       expenseTotal += actual;
       expenseTarget += category.target;
-      expenseCategories.push({
-        ...category.toObject(),
-        actual,
-      });
     } else {
       incomeTotal += actual;
-      incomeTarget += category.target;
-      incomeCategories.push({
-        ...category.toObject(),
-        actual,
-      }); 
+      incomeTarget += category.target; 
     }
+
+    categoriesWithActuals.push({
+      ...category.toObject(),
+      actual
+    })
   });
 
   return {
@@ -191,10 +180,8 @@ const generateReport = (budget, transactions) => {
     description: budget.description,
     createdAt: budget.createdAt,
     updatedAt: budget.updatedAt, 
-    expenseCategories,
-    incomeCategories,
-    expenseTransactions,
-    incomeTransactions,
+    categories: categoriesWithActuals,
+    transactions: transactionsWithCategoryInfo,
     expenseTarget,
     expenseTotal,
     incomeTarget,

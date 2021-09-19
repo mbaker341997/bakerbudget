@@ -4,14 +4,10 @@ import {
   EDIT_BUDGET_SUCCESS,
   FETCH_BUDGET_SUCCESS,
   ERROR,
-  ADD_EXPENSE,
-  ADD_INCOME,
-  REMOVE_EXPENSE,
-  REMOVE_INCOME,
-  ADD_EXPENSE_CATEGORY,
-  ADD_INCOME_CATEGORY,
-  REMOVE_EXPENSE_CATEGORY,
-  REMOVE_INCOME_CATEGORY
+  ADD_TRANSACTION,
+  REMOVE_TRANSACTION,
+  ADD_CATEGORY,
+  REMOVE_CATEGORY
 } from './budgetActionTypes';
 
 export const fetchBudgetAction = (id, dispatch) => {
@@ -67,14 +63,14 @@ export const deleteBudgetAction = (id, dispatch) => {
     });
 }
 
-export const addTransactionAction = (data, isExpense, dispatch) => {
+export const addTransactionAction = (data, dispatch) => {
   // axios POST call 
   axios.post('http://localhost:5000/transactions', {
     ...data
   })
     .then(response => {
       dispatch({
-        type: isExpense ? ADD_EXPENSE : ADD_INCOME,
+        type: ADD_TRANSACTION,
         payload: response.data
       });
     })
@@ -106,12 +102,12 @@ export const editTransactionAction = (id, budgetId, data, dispatch) => {
     });
 }
 
-export const deleteTransactionAction = (id, isExpense, dispatch) => {
+export const deleteTransactionAction = (id, dispatch) => {
   // axios DELETE call 
   axios.delete(`http://localhost:5000/transactions/${id}`)
     .then(_ => {
       dispatch({
-        type: isExpense ? REMOVE_EXPENSE : REMOVE_INCOME,
+        type: REMOVE_TRANSACTION,
         payload: id
       });
     })
@@ -130,7 +126,7 @@ export const addCategoryAction = (budgetId, data, dispatch) => {
   })
     .then(response => {
       dispatch({
-        type: data.isExpense ? ADD_EXPENSE_CATEGORY : ADD_INCOME_CATEGORY,
+        type: ADD_CATEGORY,
         payload: response.data
       });
     })
@@ -160,12 +156,12 @@ export const editCategoryAction = (categoryId, budgetId, data, dispatch) => {
     });
 }
 
-export const deleteCategoryAction = (categoryId, budgetId, isExpense, dispatch) => {
+export const deleteCategoryAction = (categoryId, budgetId, dispatch) => {
   // axios DELETE call 
   axios.delete(`http://localhost:5000/budgets/${budgetId}/categories/${categoryId}`)
     .then(_ => {
       dispatch({
-        type: isExpense ? REMOVE_EXPENSE_CATEGORY : REMOVE_INCOME_CATEGORY,
+        type: REMOVE_CATEGORY,
         payload: categoryId
       });
     })

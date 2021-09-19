@@ -3,7 +3,7 @@ import { addTransactionAction, deleteTransactionAction, editTransactionAction } 
 import { CURRENCY_FORMATTER } from '../constants';
 import ItemTable from './itemTable';
 
-const TransactionTable = ({ budgetId, categories, transactions, isExpense, dispatch }) => {
+const TransactionTable = ({ budgetId, categories, transactions, dispatch }) => {
   const generateTransactionRow = (transaction, onClick) => {
     return (
       <tr key={transaction._id} id={transaction._id} onClick={onClick}>
@@ -40,8 +40,8 @@ const TransactionTable = ({ budgetId, categories, transactions, isExpense, dispa
         generateRowFunc={generateTransactionRow}
         data={transactions}
         itemName="Transaction"
-        deleteItem={(transaction_id) => deleteTransactionAction(transaction_id, isExpense, dispatch)}
-        addItem={(formData) => addTransactionAction({ ...formData, budgetId }, isExpense, dispatch)}
+        deleteItem={(transaction_id) => deleteTransactionAction(transaction_id, dispatch)}
+        addItem={(formData) => addTransactionAction({ ...formData, budgetId }, dispatch)}
         editItem={(transaction_id, formData) => editTransactionAction(transaction_id, budgetId, formData, dispatch)}
         baseItem={{
           title: "",
