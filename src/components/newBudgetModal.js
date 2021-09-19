@@ -7,16 +7,16 @@ import useFormState from '../hooks/useFormState';
 const NewBudgetModal = ({ 
   showModal, 
   handleClose, 
-  submitBudget, 
-  baseBudget, 
+  submit, 
+  base, 
   modalTitle, 
   reset, 
   children 
 }) => {
   const [modalData, handleChange, handleSubmit] = useFormState({
-    title: baseBudget.title,
-    description: baseBudget.description
-  }, submitBudget, reset)
+    title: base.title,
+    description: base.description
+  }, submit, reset)
 
   return (
     <FormModal

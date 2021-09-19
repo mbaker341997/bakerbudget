@@ -113,7 +113,6 @@ const DashboardContainer = () => {
         <ul>
           <li>Consolidations, get the project structure down</li>
           <ul>
-            <li>Try to consolidate their tables</li>
             <li>Simplify the reducers (in report api return one category and transaction list)</li>
             <li>Organize the directories</li>
           </ul>

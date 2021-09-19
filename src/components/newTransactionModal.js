@@ -6,19 +6,19 @@ import useFormState from '../hooks/useFormState';
 const NewTransactionModal = ({ 
   showModal, 
   handleClose, 
-  submitTransaction, 
-  baseTransaction,
+  submit, 
+  base,
   categories, 
   modalTitle, 
   reset }) => {
     // note, formatting of the date to get it to play nice with the html
     const [modalData, handleChange, handleSubmit] = useFormState({
-      title: baseTransaction.title,
-      description: baseTransaction.description,
-      amount: baseTransaction.amount,
-      date: baseTransaction.date.split('T')[0],
-      categoryId: baseTransaction.categoryId
-    }, submitTransaction, reset)
+      title: base.title,
+      description: base.description,
+      amount: base.amount,
+      date: base.date.split('T')[0],
+      categoryId: base.categoryId
+    }, submit, reset)
 
     return (
       <FormModal
