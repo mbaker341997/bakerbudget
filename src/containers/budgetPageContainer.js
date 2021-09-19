@@ -19,26 +19,10 @@ const BudgetPageContainer = () => {
   const { id } = useParams();
   const { budgetState, budgetDispatch } = useContext(BudgetContext);
 
-  const showDeleteModal = () => {
-    setShowDelete(true);
-  };
-
-  const handleCloseDelete = () => {
-    setShowDelete(false);
-  };
-
   const deleteBudget = () => {
     setShowDelete(false);
     deleteBudgetAction(id, budgetDispatch);
   }
-
-  const showEditModal = () => {
-    setShowEdit(true);
-  };
-
-  const handleCloseEdit = () => {
-    setShowEdit(false);
-  };
 
   const editBudget = (budgetData) => {
     setShowEdit(false);
@@ -62,8 +46,8 @@ const BudgetPageContainer = () => {
               <Col><h1>{budgetState.budget.title}</h1></Col>  
               <Col>
                 <div className="float-end">   
-                  <Button variant="primary" onClick={showEditModal}>Edit</Button>{' '}
-                  <Button variant="danger" onClick={showDeleteModal}>Delete</Button>
+                  <Button variant="primary" onClick={() => setShowEdit(true)}>Edit</Button>{' '}
+                  <Button variant="danger" onClick={() => setShowDelete(true)}>Delete</Button>
                 </div>
               </Col>      
             </Row>
@@ -82,16 +66,16 @@ const BudgetPageContainer = () => {
             <BudgetTables budget={budgetState.budget} dispatch={budgetDispatch} />
             <DeleteModal
               show={showDelete}
-              close={handleCloseDelete}
+              close={() => setShowDelete(false)}
               deleteAction={deleteBudget}
               title={budgetState.budget.title}
               body="Are you sure you want to delete this budget? Action cannot be undone."
             />
             <NewBudgetModal
               showModal={showEdit} 
-              handleClose={handleCloseEdit} 
-              submitBudget={editBudget}
-              baseBudget={budgetState.budget}
+              handleClose={() => setShowEdit(false)} 
+              submit={editBudget}
+              base={budgetState.budget}
               modalTitle="Edit Budget"
             />
           </Container>

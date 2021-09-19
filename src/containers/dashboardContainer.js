@@ -49,14 +49,6 @@ const DashboardContainer = () => {
       .finally(() => setLoading(false));
   }, [newestBudget]);
 
-  const handleAddBudgetClick = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseAddBudget = () => {
-    setShowModal(false);
-  };
-
   const addBudget = (budgetData) => {
     setShowModal(false);
     axios.post('http://localhost:5000/budgets', {
@@ -84,7 +76,7 @@ const DashboardContainer = () => {
           <h2 className="float-start">Budgets</h2>
         </Col>
         <Col>
-          <Button className="float-end" variant="primary" onClick={handleAddBudgetClick}>Add Budget</Button>
+          <Button className="float-end" variant="primary" onClick={() => setShowModal(true)}>Add Budget</Button>
         </Col>
       </Row>
       { error && <Alert variant="danger">{error}</Alert> }
@@ -96,9 +88,9 @@ const DashboardContainer = () => {
       }
       <NewBudgetModal
         showModal={showModal} 
-        handleClose={handleCloseAddBudget} 
-        submitBudget={addBudget}
-        baseBudget={defaultBudget}
+        handleClose={() => setShowModal(false)} 
+        submit={addBudget}
+        base={defaultBudget}
         modalTitle="Add Budget"
         reset
       >
