@@ -116,7 +116,6 @@ const DashboardContainer = () => {
           <ul>
             <li>Unit test backend</li>
             <ul>
-              <li>Create DAO layer for hitting MongoDB and unit test it</li>
               <li>Create controller layer for middle logic and unit test it.</li>
               <li>Clean out unused endpoints</li>
             </ul>

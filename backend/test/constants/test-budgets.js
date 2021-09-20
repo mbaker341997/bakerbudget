@@ -1,4 +1,4 @@
-const budgetNoIds =   {
+const budgetNoIds = {
   title: "test budget",
   description: "a test budget",
   categories: [
@@ -17,7 +17,7 @@ const budgetNoIds =   {
   ]
 };
 
-const testBudgetOne =   {
+const testBudgetOne = {
   _id: "budget_one",
   title: "test budget one",
   description: "a test budget",
@@ -39,7 +39,7 @@ const testBudgetOne =   {
   ]
 };
 
-const testBudgetTwo =   {
+const testBudgetTwo = {
   _id: "budget_two",
   title: "test budget two",
   description: "a test budget two",
