@@ -1,12 +1,9 @@
 const router = require("express").Router();
 const Budget = require("../models/budget.model");
 const Transaction = require("../models/transaction.model");
+const budgetController = require("../controllers/budgets.controller");
 
-router.route("/").get((_, res) => {
-  Budget.find()
-    .then((budgets) => res.json(budgets))
-    .catch((err) => res.status(400).json("Error: " + err));
-});
+router.route("/").get(async (_, res) => await budgetController.getAllBudgets(res));
 
 router.route("/").post((req, res) => {
   const budget = new Budget(req.body);
@@ -39,20 +36,6 @@ router.route("/:id").put((req, res) => {
         res.status(404).json(`No budget found of id ${req.params.id}`);
       } else {
         res.json({ id: budget._id });
-      }
-    })
-    .catch((err) => res.status(500).json("Error: " + err));
-});
-
-router.route("/:id/transactions").get((req, res) => {
-  Budget.findById(req.params.id)
-    .then((budget) => {
-      if (budget) {
-        Transaction.find({ budgetId: req.params.id })
-          .then((transactions) => res.json(transactions))
-          .catch((err) => res.status(500).json("Error: " + err));
-      } else {
-        res.status(404).json(`No budget found of id ${req.params.id}`);
       }
     })
     .catch((err) => res.status(500).json("Error: " + err));

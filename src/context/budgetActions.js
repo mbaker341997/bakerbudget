@@ -12,7 +12,7 @@ import {
 
 export const fetchBudgetAction = (id, dispatch) => {
   axios
-    .get(`http://localhost:5000/budgets/${id}/report`)
+    .get(`http://localhost:5000/api/budgets/${id}/report`)
     .then((result) => {
       dispatch({
         type: FETCH_BUDGET_SUCCESS,
@@ -33,7 +33,7 @@ export const editBudgetAction = (id, data, dispatch) => {
   });
 
   axios
-    .put(`http://localhost:5000/budgets/${id}`, {
+    .put(`http://localhost:5000/api/budgets/${id}`, {
       ...data,
     })
     .then((_) => {
@@ -56,7 +56,7 @@ export const deleteBudgetAction = (id, dispatch) => {
   });
 
   axios
-    .delete(`http://localhost:5000/budgets/${id}`)
+    .delete(`http://localhost:5000/api/budgets/${id}`)
     .then((_) => {
       window.location = "/";
     })
@@ -71,7 +71,7 @@ export const deleteBudgetAction = (id, dispatch) => {
 export const addTransactionAction = (data, dispatch) => {
   // axios POST call
   axios
-    .post("http://localhost:5000/transactions", {
+    .post("http://localhost:5000/api/transactions", {
       ...data,
     })
     .then((response) => {
@@ -93,7 +93,7 @@ export const addTransactionAction = (data, dispatch) => {
 export const editTransactionAction = (id, budgetId, data, dispatch) => {
   // axios PUT call
   axios
-    .put(`http://localhost:5000/transactions/${id}`, {
+    .put(`http://localhost:5000/api/transactions/${id}`, {
       ...data,
     })
     .then((_) => {
@@ -112,7 +112,7 @@ export const editTransactionAction = (id, budgetId, data, dispatch) => {
 export const deleteTransactionAction = (id, dispatch) => {
   // axios DELETE call
   axios
-    .delete(`http://localhost:5000/transactions/${id}`)
+    .delete(`http://localhost:5000/api/transactions/${id}`)
     .then((_) => {
       dispatch({
         type: REMOVE_TRANSACTION,
@@ -132,7 +132,7 @@ export const deleteTransactionAction = (id, dispatch) => {
 export const addCategoryAction = (budgetId, data, dispatch) => {
   // axios POST call
   axios
-    .post(`http://localhost:5000/budgets/${budgetId}/categories`, {
+    .post(`http://localhost:5000/api/budgets/${budgetId}/categories`, {
       ...data,
     })
     .then((response) => {
@@ -152,7 +152,7 @@ export const addCategoryAction = (budgetId, data, dispatch) => {
 export const editCategoryAction = (categoryId, budgetId, data, dispatch) => {
   // axios PUT call
   axios
-    .put(`http://localhost:5000/budgets/${budgetId}/categories/${categoryId}`, {
+    .put(`http://localhost:5000/api/budgets/${budgetId}/categories/${categoryId}`, {
       ...data,
     })
     .then((_) => {
@@ -172,7 +172,7 @@ export const deleteCategoryAction = (categoryId, budgetId, dispatch) => {
   // axios DELETE call
   axios
     .delete(
-      `http://localhost:5000/budgets/${budgetId}/categories/${categoryId}`
+      `http://localhost:5000/api/budgets/${budgetId}/categories/${categoryId}`
     )
     .then((_) => {
       dispatch({

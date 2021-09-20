@@ -36,7 +36,7 @@ const DashboardContainer = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/budgets")
+      .get("http://localhost:5000/api/budgets")
       .then((result) => {
         setBudgets(result.data);
       })
@@ -53,7 +53,7 @@ const DashboardContainer = () => {
   const addBudget = (budgetData) => {
     setShowModal(false);
     axios
-      .post("http://localhost:5000/budgets", {
+      .post("http://localhost:5000/api/budgets", {
         ...defaultBudget,
         title: budgetData.title,
         description: budgetData.description,
@@ -112,19 +112,21 @@ const DashboardContainer = () => {
       <Row>
         <h4>TODOList for MVP</h4>
         <ul>
-          <li>
-            Have react in a client directory with the backend being top-level
-          </li>
           <li>Tests</li>
           <ul>
             <li>Unit test backend</li>
+            <ul>
+              <li>Create DAO layer for hitting MongoDB and unit test it</li>
+              <li>Create controller layer for middle logic and unit test it.</li>
+              <li>Clean out unused endpoints</li>
+            </ul>
             <li>Unit test frontend</li>
             <li>Coverage for both</li>
             <li>Integ tests?</li>
           </ul>
           <li>Graphs on the report (chart js integration)</li>
           <ul>
-            <li>Bar graphs of income vs actual</li>
+            <li>Bar graphs of income vs expenses</li>
             <li>Bar graphs actuals vs expected</li>
             <li>Pie graph of category compositions expected and actual</li>
           </ul>
@@ -132,10 +134,22 @@ const DashboardContainer = () => {
             Color-coding of categories where you&apos;ve overspent,
             under-received
           </li>
-          <li>Hard-coded budget templates</li>
-          <li>CRUD the templates on the backend</li>
-          <li>Templates page/view</li>
-          <li>Create template from budget</li>
+          <li>Templates</li>
+          <ul>
+            <li>Backend change to mark budget as template</li>
+            <li>Backend changet to block transaction creation on templates</li>
+            <li>Create budget modal, create from template (hard coded)</li>
+            <li>View templates section</li>
+            <li>View/create template page</li>
+            <li>Create template from existing budget.</li>
+          </ul>
+          <li>Create production build and bundle into express server</li>
+          <ul>
+            <li>Yarn build</li>
+            <li>Express route to serve the files</li>
+            <li>Proper build command to automate bundling and exporting to right destination</li>
+            <li>Some way to export the pure express server without all the react app node modules</li>
+          </ul>
           <li>Host on RPi</li>
         </ul>
         <h4>TODOList for Stretch goals</h4>

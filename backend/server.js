@@ -25,8 +25,8 @@ app.use(logger);
 // routers
 const budgetsRouter = require("./routes/budgets");
 const transactionsRouter = require("./routes/transactions");
-app.use("/budgets", budgetsRouter);
-app.use("/transactions", transactionsRouter);
+app.use("/api/budgets", budgetsRouter);
+app.use("/api/transactions", transactionsRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
