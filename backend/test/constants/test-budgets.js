@@ -1,3 +1,22 @@
+const budgetNoIds =   {
+  title: "test budget",
+  description: "a test budget",
+  categories: [
+    {
+      title: "Income",
+      description: "Money brought in",
+      target: 3000,
+      isExpense: false
+    },
+    {
+      title: "Expense",
+      description: "Money spent",
+      target: 2000,
+      isExpense: true
+    }
+  ]
+};
+
 const testBudgetOne =   {
   _id: "budget_one",
   title: "test budget one",
@@ -46,5 +65,6 @@ module.exports = {
   budgetArray: [
     testBudgetOne,
     testBudgetTwo
-  ]
+  ],
+  budgetNoIds
 }

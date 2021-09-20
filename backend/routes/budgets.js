@@ -13,15 +13,7 @@ router.route("/").post((req, res) => {
     .catch((err) => res.status(500).json("Error: " + err));
 });
 
-router.route("/:id").get((req, res) => {
-  Budget.findById(req.params.id)
-    .then((budget) =>
-      budget
-        ? res.json(budget)
-        : res.status(404).json(`No budget found of id ${req.params.id}`)
-    )
-    .catch((err) => res.status(500).json("Error: " + err));
-});
+router.route("/:id").get(async (req, res) => getBudget(req.params.id, res));
 
 router.route("/:id").delete((req, res) => {
   Budget.findByIdAndDelete(req.params.id)
